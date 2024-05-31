@@ -1,7 +1,14 @@
 import React from "react";
+import Slider from "./Slider/Slider";
+import TourismAndTravelGuide from "./TourismAndTravelGuide/TourismAndTravelGuide";
 
 const Home = () => {
-  return <div>this is home</div>;
+  return (
+    <div>
+      <Slider />
+      <TourismAndTravelGuide />
+    </div>
+  );
 };
 
 export default Home;

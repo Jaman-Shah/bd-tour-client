@@ -61,14 +61,14 @@ const Navbar = () => {
 
   const activeClass = ({ isActive }) =>
     `hover:text-black hover:rounded-xl   ${
-      isActive ? "text-black font-bold" : "text-orange-500 text-white"
+      isActive ? "text-black font-bold" : "text-orange-500 text-[#ffa801]"
     }`;
 
   return (
     <nav
       x-data="{ isOpen: false }"
-      className={`fixed w-full transform  top-1 rounded-xl z-10  ${
-        navbarBg ? "bg-[#32CD32]" : "bg-[#78e08f]"
+      className={`fixed w-full transform top-0 z-10  ${
+        navbarBg ? "bg-[#575fcf]" : "bg-[#3c40c6]"
       }  shadow`}
     >
       <div className="px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
