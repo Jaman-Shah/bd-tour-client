@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
-import { FaBowlFood } from "react-icons/fa6";
-import { RiGalleryLine } from "react-icons/ri";
+import { FaPeopleRoof, FaBloggerB } from "react-icons/fa6";
 import { AiOutlineLogout } from "react-icons/ai";
+import { BsFillQuestionSquareFill } from "react-icons/bs";
+import { RiContactsLine } from "react-icons/ri";
+
 // import { AuthContext } from "../Providers/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -141,7 +143,7 @@ const Navbar = () => {
             </NavLink>
             <NavLink to="/community" className={activeClass}>
               <div className="flex flex-col items-center">
-                <IoHomeOutline
+                <FaPeopleRoof
                   className={`${activeClass} text-xl rounded-full`}
                 />
                 <h3 className="text-sm">Community</h3>
@@ -149,15 +151,13 @@ const Navbar = () => {
             </NavLink>
             <NavLink to="/blogs" className={activeClass}>
               <div className="flex flex-col items-center">
-                <IoHomeOutline
-                  className={`${activeClass} text-xl rounded-full`}
-                />
+                <FaBloggerB className={`${activeClass} text-xl rounded-full`} />
                 <h3 className="text-sm">Blogs</h3>
               </div>
             </NavLink>
             <NavLink to="/about-us" className={activeClass}>
               <div className="flex flex-col items-center">
-                <IoHomeOutline
+                <BsFillQuestionSquareFill
                   className={`${activeClass} text-xl rounded-full`}
                 />
                 <h3 className="text-sm">About Us</h3>
@@ -165,7 +165,7 @@ const Navbar = () => {
             </NavLink>
             <NavLink to="/contact-us" className={activeClass}>
               <div className="flex flex-col items-center">
-                <IoHomeOutline
+                <RiContactsLine
                   className={`${activeClass} text-xl rounded-full`}
                 />
                 <h3 className="text-sm">Contact Us</h3>
