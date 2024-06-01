@@ -7,6 +7,7 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import PackageDetails from "../components/shared/PackageDetails";
 import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 
 export const routers = createBrowserRouter([
   {
@@ -38,8 +39,12 @@ export const routers = createBrowserRouter([
         element: <PackageDetails />,
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },
