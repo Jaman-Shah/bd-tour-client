@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Packages from "./Packages";
 import OverViewVideo from "./OverViewVideo";
+import OurGuide from "./OurGuide";
 
 const TourismAndTravelGuide = () => {
   return (
@@ -11,11 +12,13 @@ const TourismAndTravelGuide = () => {
       <SectionHeader title="Tourism and Travel Guide" />
       <div className="text-center">
         <Tabs>
-          <TabList>
-            <Tab>Our Packages</Tab>
-            <Tab>Overview</Tab>
-            <Tab>Meet Our Tour Guides</Tab>
-          </TabList>
+          <div className="mb-8">
+            <TabList>
+              <Tab>Our Packages</Tab>
+              <Tab>Overview</Tab>
+              <Tab>Meet Our Tour Guides</Tab>
+            </TabList>
+          </div>
           <TabPanel>
             <Packages />
           </TabPanel>
@@ -23,7 +26,7 @@ const TourismAndTravelGuide = () => {
             <OverViewVideo />
           </TabPanel>
           <TabPanel>
-            <h2>Meet Our Tour Guides</h2>
+            <OurGuide />
           </TabPanel>
         </Tabs>
       </div>

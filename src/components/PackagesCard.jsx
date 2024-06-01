@@ -18,7 +18,7 @@ const PackagesCard = () => {
         <div className="absolute h-1/6 w-1/2 left-0 top-2/3 transform translate-y-1/2 bg-pink-500 rounded-r-full">
           <p className="font-bold text-2xl">240$ </p>
         </div>
-        <div className="bg-red-300 text-center pt-24 pb-8 px-8 rounded-b-2xl">
+        <div className="bg-[#575FCF] text-white text-center pt-24 pb-8 px-8 rounded-b-2xl">
           <h1 className="text-2xl font-bold "> Name</h1>
           <p className="mb-6">Lorem ipsum dolor sit amet.</p>
           <Link to="/details" className="border p-2 rounded-full">
