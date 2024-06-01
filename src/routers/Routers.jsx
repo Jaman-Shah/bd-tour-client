@@ -5,6 +5,7 @@ import Community from "../pages/Community/Community";
 import Blogs from "../pages/Blogs/Blogs";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import PackageDetails from "../components/shared/PackageDetails";
 
 export const routers = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const routers = createBrowserRouter([
       {
         path: "/contact-us",
         element: <ContactUs />,
+      },
+      {
+        path: "/package/details",
+        element: <PackageDetails />,
       },
     ],
   },
