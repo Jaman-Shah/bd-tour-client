@@ -6,6 +6,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import PackageDetails from "../components/shared/PackageDetails";
+import Login from "../pages/Login/Login";
 
 export const routers = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const routers = createBrowserRouter([
       {
         path: "/package/details",
         element: <PackageDetails />,
+      },
+      {
+        path: "login",
+        element: <Login />,
       },
     ],
   },

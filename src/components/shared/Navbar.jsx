@@ -9,8 +9,11 @@ import { RiContactsLine } from "react-icons/ri";
 // import { AuthContext } from "../Providers/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+  // const { user } = useAuth();
+  const user = false;
   const [isOpen, setIsOpen] = useState(false);
   const [navbarBg, setNavbarBg] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -18,7 +21,6 @@ const Navbar = () => {
   //  getting user from auth context
 
   //   const { user, signOutUser } = useContext(AuthContext);
-  const user = true;
 
   const toggleProfile = () => {
     setShowProfileMenu(!showProfileMenu);
@@ -212,22 +214,21 @@ const Navbar = () => {
                   to="/myaddedfoods"
                   className="p-2 font-bold rounded-2xl bg-gray-500 text-white"
                 >
-                  My Added Food Items
+                  Dashboard
                 </Link>
                 <Link
                   onClick={toggleProfile}
                   to="/addafood"
                   className="  p-2 font-bold rounded-2xl bg-gray-500 text-white"
                 >
-                  Add a food item
+                  Offer Announcement
                 </Link>
-                <Link
-                  onClick={toggleProfile}
-                  to="/myorderedfoods"
-                  className="  p-2 font-bold rounded-2xl bg-gray-500 text-white"
-                >
-                  My ordered food items
-                </Link>
+                <p className="  p-2 font-bold rounded-2xl bg-gray-500 text-white">
+                  Name
+                </p>
+                <p className="  p-2 font-bold rounded-2xl bg-gray-500 text-white">
+                  Email
+                </p>
               </div>
             </div>
           </div>
