@@ -1,26 +1,22 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaPeopleRoof, FaBloggerB } from "react-icons/fa6";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
 import { RiContactsLine } from "react-icons/ri";
-
-// import { AuthContext } from "../Providers/AuthProvider";
+import useAuth from "./../../hooks/useAuth";
+import { auth } from "../../firebase/firebase.config";
 import toast from "react-hot-toast";
-import axios from "axios";
-import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
-  // const { user } = useAuth();
-  const user = false;
+  const { user, signOutUser } = useAuth();
+
   const [isOpen, setIsOpen] = useState(false);
   const [navbarBg, setNavbarBg] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   //  getting user from auth context
-
-  //   const { user, signOutUser } = useContext(AuthContext);
 
   const toggleProfile = () => {
     setShowProfileMenu(!showProfileMenu);
@@ -45,17 +41,11 @@ const Navbar = () => {
   const handleSignOutUser = () => {
     signOutUser()
       .then(() => {
-        return axios.get("https://tastify-server-ten.vercel.app/logout", {
-          withCredentials: true,
-        });
-      })
-      .then((data) => {
-        console.log(data);
-        toast.success("Successfully signed out");
+        toast.success("successfully sign out");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Failed to sign out");
       });
   };
 

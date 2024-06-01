@@ -3,10 +3,11 @@ import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const user = true;
-  //   const { user, loginUser, signInWithGoogle } = useAuth();
+  const { user, loginUser, signInWithGoogle } = useAuth();
+
   const [eyeOpen, setEyeOpen] = useState(false);
   console.log(user);
   const { register, handleSubmit } = useForm();
@@ -20,11 +21,9 @@ const Login = () => {
   const location = useLocation();
 
   // login button functionality
-  const handleLogin = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
     loginUser(email, password)
       .then((result) => {
         toast.success("Login Success");
@@ -38,8 +37,6 @@ const Login = () => {
         }
       });
   };
-
-  const onSubmit = (data) => console.log(data);
 
   // google popup login function
   const handleGoogleLogIn = () => {
@@ -94,8 +91,12 @@ const Login = () => {
             </div>
           </form>
           <div className="flex justify-center gap-2">
-            <button className="border p-2 border-black">Google</button>
-            <button className="border p-2 border-black">Github</button>
+            <button
+              onClick={handleGoogleLogIn}
+              className="border p-2 border-black"
+            >
+              Google
+            </button>
           </div>
         </div>
         <div className="w-full md:w-1/2 h-1/3 md:h-full flex justify-center items-center rounded-r-3xl bg-blue-300">
