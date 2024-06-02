@@ -8,8 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
-import axios from "axios";
-
+import useAxiosSecure from "../hooks/useAxiosSecure";
 export const AuthContext = createContext(null);
 
 // google auth provider
@@ -18,6 +17,9 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  //  axiosSecure  function
+  const axiosSecure = useAxiosSecure();
 
   // creating user with email and password
 
@@ -59,7 +61,7 @@ const AuthProvider = ({ children }) => {
       createdAt: Date.now(),
     };
     try {
-      const response = await axios.put("http://localhost:5006/users", user);
+      const response = await axiosSecure.put("/users", user);
       console.log(response.data);
     } catch (error) {
       console.log("error form creating user", error.message);
