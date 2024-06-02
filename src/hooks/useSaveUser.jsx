@@ -7,7 +7,7 @@ const saveUser = async (name, email, photo_url) => {
     name,
     email,
     photo_url,
-    role: "guest",
+    role: "tourist",
     status: "accepted",
     createdAt: Date.now(),
   };

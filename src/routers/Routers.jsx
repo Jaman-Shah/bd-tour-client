@@ -8,6 +8,8 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import PackageDetails from "../components/shared/PackageDetails";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Dashboard from "../pages/dashboard/Dashboard";
+import DashboardProfile from "../pages/DashboardProfile/DashboardProfile";
 
 export const routers = createBrowserRouter([
   {
@@ -45,6 +47,24 @@ export const routers = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "",
+            element: <DashboardProfile />,
+          },
+          {
+            path: "item2",
+            element: "this this is item 2",
+          },
+          {
+            path: "item3",
+            element: "this is item 3",
+          },
+        ],
       },
     ],
   },

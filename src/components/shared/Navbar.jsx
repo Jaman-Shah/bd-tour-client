@@ -192,7 +192,7 @@ const Navbar = () => {
               <div className="flex flex-col gap-4">
                 <Link
                   onClick={toggleProfile}
-                  to="/myaddedfoods"
+                  to="/dashboard"
                   className="p-2 font-bold rounded-2xl bg-gray-500 text-white"
                 >
                   Dashboard
