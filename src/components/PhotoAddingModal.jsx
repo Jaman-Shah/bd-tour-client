@@ -8,6 +8,7 @@ import {
 } from "@headlessui/react";
 import { useState } from "react";
 import { photoUpload } from "../api/utils/photoUpload";
+import toast from "react-hot-toast";
 
 export default function PhotoAddingModal({
   loading,
@@ -18,24 +19,35 @@ export default function PhotoAddingModal({
   setPhotoUrls,
 }) {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [imageAddresses, setImageAddresses] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const form = e.target;
     const image = form.image.files[0];
+    setImageAddresses([...imageAddresses, image]);
 
     try {
+      setLoading(true);
       const image_url = await photoUpload(image);
+      if (imageAddresses.includes(image)) {
+        setLoading(false);
+        return toast.error("Same Image not allowed");
+      }
       setPhotoUrls([...photoUrls, image_url]);
+      setLoading(false);
       setErrorMessage(null);
     } catch (error) {
       console.error("Image upload error:", error);
-      setErrorMessage("Error uploading image. Please try again."); // Set error message
+      setErrorMessage("Error uploading image. Please try again.");
+      setLoading(false);
     }
   };
 
   const closeModal = () => {
+    if (photoUrls.length < 4) {
+      return toast.error("Add More than 4 photos");
+    }
     setIsPhotoModalOpen(false);
   };
   return (
@@ -75,7 +87,7 @@ export default function PhotoAddingModal({
                       <form onSubmit={handleSubmit} className="flex flex-col">
                         <input type="file" name="image" accept="image/*" />
                         <button className="border p-2 mt-2 rounded-full">
-                          Submit
+                          {loading ? "Uploading..." : "Upload"}
                         </button>
                       </form>
                     </div>
@@ -100,7 +112,7 @@ export default function PhotoAddingModal({
                       className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                       onClick={closeModal}
                     >
-                      Save
+                      OK
                     </Button>
                   </div>
                 </DialogPanel>
