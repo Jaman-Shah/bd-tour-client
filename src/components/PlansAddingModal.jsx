@@ -9,9 +9,22 @@ import {
 import { useState } from "react";
 
 export default function PlansAddingModal({
+  plans,
+  setPlans,
   isPlanModalOpen,
   setIsPlanModalOpen,
 }) {
+  const handlePlanSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const title = form.title.value;
+    const details = form.details.value;
+    const plan = { title, details };
+    setPlans([...plans, plan]);
+    form.reset();
+    console.log(title, details);
+  };
+
   const closeModal = () => {
     setIsPlanModalOpen(false);
   };
@@ -39,18 +52,44 @@ export default function PlansAddingModal({
                     as="h3"
                     className="text-base/7 font-medium text-black"
                   >
-                    Add Photos
+                    Add Plans {`${plans.length}`}
                   </DialogTitle>
 
                   {/* -----------main works starts ---------- */}
+                  <form onSubmit={handlePlanSubmit} className="flex flex-col">
+                    <div>
+                      <p>Plan Title</p>
+                      <input
+                        type="text"
+                        name="title"
+                        className="h-12 border border-black mb-4 px-4 py-2 w-full"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <p>Plan Details</p>
+                      <textarea
+                        name="details"
+                        type="text"
+                        className="h-12 border border-black mb-4 px-4 py-2 w-full"
+                        required
+                      />
+                    </div>
 
+                    <button
+                      type="submit"
+                      className="rounded-full border border-black p-2"
+                    >
+                      Add
+                    </button>
+                  </form>
                   {/*------------ Main work ends -------------- */}
                   <div className="mt-4">
                     <Button
                       className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                       onClick={closeModal}
                     >
-                      Save
+                      Ok
                     </Button>
                   </div>
                 </DialogPanel>
