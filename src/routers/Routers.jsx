@@ -10,6 +10,11 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import DashboardProfile from "../pages/DashboardProfile/DashboardProfile";
+import DashboardTouristBookings from "../pages/DashboardTouristBookings/DashboardTouristBookings";
+import DashboardTouristWishList from "../pages/DashboardTouristWishList/DashboardTouristWishList";
+import DashboardGuideAssignedTours from "../pages/DashboardGuideAssignedTours/DashboardGuideAssignedTours";
+import DashboardAdminAddPackage from "../pages/DashboardAdminAddPackage/DashboardAdminAddPackage";
+import DashboardAdminManageUser from "../pages/DashboardAdminManageUser/DashboardAdminManageUser";
 
 export const routers = createBrowserRouter([
   {
@@ -57,13 +62,26 @@ export const routers = createBrowserRouter([
             element: <DashboardProfile />,
           },
           {
-            path: "item2",
-            element: "this this is item 2",
+            path: "tourist-bookings",
+            element: <DashboardTouristBookings />,
           },
           {
-            path: "item3",
-            element: "this is item 3",
+            path: "tourist-wishlist",
+            element: <DashboardTouristWishList />,
           },
+          {
+            path: "guide-assigned-tours",
+            element: <DashboardGuideAssignedTours />,
+          },
+          {
+            path: "admin-add-packages",
+            element: <DashboardAdminAddPackage />,
+          },
+          {
+            path: "admin-manage-users",
+            element: <DashboardAdminManageUser />,
+          },
+          {},
         ],
       },
     ],
