@@ -26,15 +26,9 @@ const Register = () => {
   const onSubmit = async (data) => {
     const { name, email, photo, password } = data;
     console.log(name, email, photo[0], password);
-
-    if (!photo || photo.length === 0) {
-      return toast.error("Please upload an image");
-    }
-
     try {
-      setLoading(true);
-
       // Create user
+      setLoading(true);
       const result = await createUser(email, password);
       const currentUser = result.user;
 

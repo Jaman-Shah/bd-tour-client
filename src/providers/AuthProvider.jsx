@@ -8,6 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -16,7 +17,7 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // creating user with email and password
 
@@ -46,17 +47,44 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // saving the user to mongodb
+
+  const saveUser = async (name, email, photo_url) => {
+    const user = {
+      name,
+      email,
+      photo_url,
+      role: "guest",
+      status: "accepted",
+      createdAt: Date.now(),
+    };
+    try {
+      const response = await axios.put("http://localhost:5006/users", user);
+      console.log(response.data);
+    } catch (error) {
+      console.log("error form creating user", error.message);
+    }
+  };
+
   // observe auth state change
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const { displayName, email, photoURL } = currentUser;
       setUser(currentUser);
+      console.log("current user info", displayName, email, photoURL);
+      if (currentUser) {
+        saveUser(displayName, email, photoURL);
+      }
       setLoading(false);
     });
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [loading]);
   const userInfo = {
     user,
     loading,
