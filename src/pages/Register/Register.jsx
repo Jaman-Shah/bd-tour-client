@@ -40,17 +40,22 @@ const Register = () => {
 
       try {
         // Upload photo
-        const photo_url = await photoUpload(photo[0]);
-        setPhotoUrl(photo_url);
+        if (currentUser) {
+          setLoading(true);
+          const photo_url = await photoUpload(photo[0]);
+          setPhotoUrl(photo_url);
+          await updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo_url,
+          });
 
+          toast.success("Account Created Successfully");
+          navigate("/");
+          setLoading(false);
+        } else {
+          return toast.error("Failed Creating User");
+        }
         // Update profile
-        await updateProfile(auth.currentUser, {
-          displayName: name,
-          photoURL: photo_url,
-        });
-
-        toast.success("Account Created Successfully");
-        navigate("/");
       } catch (photoUploadError) {
         toast.error("Photo Upload Failed");
       } finally {
