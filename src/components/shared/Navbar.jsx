@@ -1,22 +1,20 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaPeopleRoof, FaBloggerB } from "react-icons/fa6";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
 import { RiContactsLine } from "react-icons/ri";
 import useAuth from "./../../hooks/useAuth";
-import { auth } from "../../firebase/firebase.config";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const { user, signOutUser } = useAuth();
-
   const [isOpen, setIsOpen] = useState(false);
   const [navbarBg, setNavbarBg] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  //  getting user from auth context
+  const { user, setUser, signOutUser, setLoading } = useAuth();
+  const navigate = useNavigate();
 
   const toggleProfile = () => {
     setShowProfileMenu(!showProfileMenu);
@@ -36,32 +34,30 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  // sign out user
-
   const handleSignOutUser = () => {
     signOutUser()
       .then(() => {
-        toast.success("successfully sign out");
+        toast.success("Successfully signed out");
         navigate("/");
+        setUser(null);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  // reuseable active class
-
   const activeClass = ({ isActive }) =>
-    `hover:text-black hover:rounded-xl   ${
+    `hover:text-black hover:rounded-xl ${
       isActive ? "text-black font-bold" : "text-orange-500 text-[#ffa801]"
     }`;
 
   return (
     <nav
       x-data="{ isOpen: false }"
-      className={`fixed w-full transform top-0 z-10  ${
+      className={`fixed w-full transform top-0 z-10 ${
         navbarBg ? "bg-[#575fcf]" : "bg-[#3c40c6]"
-      }  shadow`}
+      } shadow`}
     >
       <div className="px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
@@ -71,20 +67,17 @@ const Navbar = () => {
             </h1>
           </Link>
 
-          {/* Mobile menu button */}
           <div className="flex md:hidden">
             <button
               onClick={toggleMenu}
               type="button"
-              className="text-black-500 hover:text-black dark:hover:text-black focus:outline-none focus:text-gray-600 "
+              className="text-black-500 hover:text-black dark:hover:text-black focus:outline-none focus:text-gray-600"
               aria-label="toggle menu"
             >
-              {/* when mobile menu is not opened  */}
               {!isOpen ? (
                 <svg
-                  x-show="!isOpen"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-8 h-8 "
+                  className="w-8 h-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="black"
@@ -97,9 +90,7 @@ const Navbar = () => {
                   />
                 </svg>
               ) : (
-                // while mobile menu is opened
                 <svg
-                  x-show="isOpen"
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-8 h-8"
                   fill="none"
@@ -118,9 +109,8 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu open: "block", Menu closed: "hidden" */}
         <div
-          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-green-500  md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${
+          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-green-500 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${
             isOpen ? "translate-x-0 opacity-100" : "opacity-0 -translate-x-full"
           }`}
         >
@@ -163,13 +153,14 @@ const Navbar = () => {
                 <h3 className="text-sm">Contact Us</h3>
               </div>
             </NavLink>
-            <div className="flex gap-4 items-center flex-col md:flex-row ">
+            <div className="flex gap-4 items-center flex-col md:flex-row">
               {user ? (
                 <div className="flex gap-4">
                   <button onClick={toggleProfile}>
                     <img
                       src={user.photoURL}
-                      className={`text-red-500 h-8 w-8 text-3xl border-2 border-white rounded-full`}
+                      className="text-red-500 h-8 w-8 text-3xl border-2 border-white rounded-full"
+                      alt="User Profile"
                     />
                   </button>
                   <button onClick={handleSignOutUser}>
@@ -180,13 +171,13 @@ const Navbar = () => {
                 <div className="flex gap-2 items-center">
                   <Link
                     to="/login"
-                    className="p-1 border rounded-xl text-sm   text-white"
+                    className="p-1 border rounded-xl text-sm text-white"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className="p-1 border rounded-xl text-sm   text-white"
+                    className="p-1 border rounded-xl text-sm text-white"
                   >
                     Register
                   </Link>
@@ -209,14 +200,14 @@ const Navbar = () => {
                 <Link
                   onClick={toggleProfile}
                   to="/addafood"
-                  className="  p-2 font-bold rounded-2xl bg-gray-500 text-white"
+                  className="p-2 font-bold rounded-2xl bg-gray-500 text-white"
                 >
                   Offer Announcement
                 </Link>
-                <p className="  p-2 font-bold rounded-2xl bg-gray-500 text-white">
+                <p className="p-2 font-bold rounded-2xl bg-gray-500 text-white">
                   Name
                 </p>
-                <p className="  p-2 font-bold rounded-2xl bg-gray-500 text-white">
+                <p className="p-2 font-bold rounded-2xl bg-gray-500 text-white">
                   Email
                 </p>
               </div>

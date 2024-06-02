@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import useSaveUser from "../../hooks/useSaveUser";
 
 const Login = () => {
   const { user, loginUser, signInWithGoogle } = useAuth();
@@ -11,6 +12,8 @@ const Login = () => {
   const [eyeOpen, setEyeOpen] = useState(false);
   console.log(user);
   const { register, handleSubmit } = useForm();
+
+  const saveUser = useSaveUser();
 
   // importing loginUser function from auth provider
 
@@ -42,6 +45,11 @@ const Login = () => {
   const handleGoogleLogIn = () => {
     signInWithGoogle()
       .then((result) => {
+        saveUser(
+          result.user.displayName,
+          result.user.email,
+          result.user.photoURL
+        );
         toast.success("Login Success");
         navigate(location.state || "/");
       })

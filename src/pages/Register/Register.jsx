@@ -7,9 +7,11 @@ import useAuth from "../../hooks/useAuth";
 import { photoUpload } from "../../api/utils/photoUpload";
 import { auth } from "../../firebase/firebase.config";
 import { updateProfile } from "firebase/auth";
+import useSaveUser from "../../hooks/useSaveUser";
 
 const Register = () => {
   const { user, createUser, signInWithGoogle, loading, setLoading } = useAuth();
+  const saveUser = useSaveUser();
   const [photoUrl, setPhotoUrl] = useState("");
 
   const [eyeOpen, setEyeOpen] = useState(false);
@@ -24,45 +26,31 @@ const Register = () => {
 
   // register button functionality
   const onSubmit = async (data) => {
+    setLoading(true);
     const { name, email, photo, password } = data;
-    console.log(name, email, photo[0], password);
+    // console.log(name, email, photo[0], password);
     try {
-      // Create user
-      setLoading(true);
-      const result = await createUser(email, password);
-      const currentUser = result.user;
+      const uploadedPhotoUrl = await photoUpload(photo[0]);
+      console.log(uploadedPhotoUrl, name, email, password);
 
       try {
-        // Upload photo
-        if (currentUser) {
-          setLoading(true);
-          const photo_url = await photoUpload(photo[0]);
-          setPhotoUrl(photo_url);
-          await updateProfile(auth.currentUser, {
+        createUser(email, password).then((result) => {
+          // Adding user profile update
+          updateProfile(auth.currentUser, {
             displayName: name,
-            photoURL: photo_url,
+            photoURL: uploadedPhotoUrl,
+          }).then(() => {
+            saveUser(name, email, uploadedPhotoUrl);
+            setLoading(false);
+            toast.success("Account Created Successfully");
+            navigate("/");
           });
-
-          toast.success("Account Created Successfully");
-          navigate("/");
-          setLoading(false);
-        } else {
-          return toast.error("Failed Creating User");
-        }
-        // Update profile
-      } catch (photoUploadError) {
-        toast.error("Photo Upload Failed");
-      } finally {
-        setLoading(false);
+        });
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (createUserError) {
-      console.log(createUserError);
-      if (createUserError.code === "auth/email-already-in-use") {
-        toast.error("This email is already in use.");
-      } else {
-        toast.error("An error occurred while creating the user.");
-      }
-      setLoading(false);
+    } catch (error) {
+      console.log(error.message, "photo UploadError");
     }
   };
 
@@ -71,6 +59,11 @@ const Register = () => {
     setLoading(true);
     signInWithGoogle()
       .then((result) => {
+        saveUser(
+          result.user.displayName,
+          result.user.email,
+          result.user.photoURL
+        );
         toast.success("Login Success");
         navigate(location.state || "/");
         setLoading(false);
