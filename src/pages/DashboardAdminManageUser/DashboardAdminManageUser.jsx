@@ -1,24 +1,26 @@
 import React from "react";
 import SectionHeader from "./../../components/shared/SectionHeader";
-import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
+import { toast } from "react-hot-toast";
+import useAuth from "./../../hooks/useAuth";
+import useGetUsers from "../../hooks/useGetUsers";
 
 const DashboardAdminManageUser = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const { users, isLoading, refetch } = useGetUsers();
 
-  const {
-    data: users,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const response = await axiosSecure("/users");
-      return response.data;
-    },
-  });
-
-  console.log(users);
+  const handleUserRole = async (id, role, email) => {
+    if (email === user.email) {
+      return toast.error("You Cannot Update Yourself");
+    }
+    const response = await axiosSecure.put(`/updateuser?id=${id}&role=${role}`);
+    if (response.data.modifiedCount) {
+      toast.success(`User update to ${role}`);
+      refetch();
+    }
+    console.log(id, role);
+  };
 
   if (isLoading) return "Loading.....";
   return (
@@ -36,7 +38,7 @@ const DashboardAdminManageUser = () => {
                   <th class="py-3 px-4 text-left">Change To</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="font-bold">
                 {users &&
                   users.map((user, index) => {
                     return (
@@ -50,11 +52,21 @@ const DashboardAdminManageUser = () => {
                         <td class="py-3 px-4">{user.role}</td>
                         <td class="py-3 px-4">{user.status}</td>
                         <td class="flex justify-center px-3 gap-8">
-                          <button className="p-2 border-2 rounded-lg bg-yellow-400">
-                            Guide
+                          <button
+                            onClick={() =>
+                              handleUserRole(user._id, "guide", user.email)
+                            }
+                            className="p-2 border-none rounded-lg bg-yellow-400"
+                          >
+                            Make Guide
                           </button>
-                          <button className="p-2 border-2 rounded-lg bg-green-400">
-                            Admin
+                          <button
+                            onClick={() =>
+                              handleUserRole(user._id, "admin", user.email)
+                            }
+                            className="p-2 border-none rounded-lg bg-green-400"
+                          >
+                            Make Admin
                           </button>
                         </td>
                       </tr>

@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import DashBoardItem from "../../components/DashBoardItem";
 import { IoPersonCircleOutline, IoListCircle } from "react-icons/io5";
-import { RiListOrdered2 } from "react-icons/ri";
 import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 import { FaHandHoldingHand } from "react-icons/fa6";
 import { BsPatchPlusFill } from "react-icons/bs";
 import { MdManageAccounts } from "react-icons/md";
 import useUser from "../../hooks/useUser";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+  const { currentUser, refetch } = useUser();
+  console.log(currentUser);
+
+  const axiosSecure = useAxiosSecure();
+
+  // using tanstack query to update users
 
   // getting users  info with the help of useUser
 
-  const user = useUser();
-  console.log(user.role);
   const handleSideBar = () => {
     setSideBarOpen(!sideBarOpen);
     localStorage.setItem("sidebarOpen", `${!sideBarOpen}`);
@@ -24,6 +29,20 @@ const Dashboard = () => {
   useEffect(() => {
     setSideBarOpen(JSON.parse(localStorage.getItem("sidebarOpen")));
   }, []);
+
+  // request to admin handler
+  const handleRoleRequest = async () => {
+    const response = await axiosSecure.put(
+      `/updateuser?id=${currentUser._id}&role=${currentUser.role}&status=pending`
+    );
+    if (currentUser.status === "pending") {
+      return toast.error("Already requested");
+    }
+    if (response.data.modifiedCount) {
+      toast.success("Requested For Guide");
+      refetch();
+    }
+  };
 
   return (
     <div>
@@ -47,7 +66,7 @@ const Dashboard = () => {
               sideBarOpen={sideBarOpen}
             />
 
-            {user.role === "tourist" ? (
+            {currentUser.role === "tourist" ? (
               <>
                 <DashBoardItem
                   link="/dashboard/tourist-bookings"
@@ -61,18 +80,21 @@ const Dashboard = () => {
                   label="My Wishlist"
                   sideBarOpen={sideBarOpen}
                 />
-                <button className="p-2 border rounded-full mt-2 text-sm">
-                  Request
+                <button
+                  onClick={handleRoleRequest}
+                  className="p-2 border rounded-full mt-2 text-sm"
+                >
+                  Request to admin
                 </button>
               </>
-            ) : user.role === "guide" ? (
+            ) : currentUser.role === "guide" ? (
               <DashBoardItem
                 link="/dashboard/guide-assigned-tours"
                 icon={FaHandHoldingHand}
                 label="Assigned Tours"
                 sideBarOpen={sideBarOpen}
               />
-            ) : user.role === "admin" ? (
+            ) : currentUser.role === "admin" ? (
               <>
                 <DashBoardItem
                   link="/dashboard/admin-add-packages"

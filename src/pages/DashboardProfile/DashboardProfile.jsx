@@ -2,9 +2,9 @@ import React from "react";
 import useUser from "../../hooks/useUser";
 
 const DashboardProfile = () => {
-  const user = useUser();
-  const { role, name, email, photo_url } = user;
-  console.log(user);
+  const { currentUser, refetch } = useUser();
+  const { role, name, email, photo_url } = currentUser;
+  console.log(currentUser);
   return (
     <div className="p-4">
       <div className="flex p-8 flex-col justify-center items-center rounded-3xl border-2 border-black">

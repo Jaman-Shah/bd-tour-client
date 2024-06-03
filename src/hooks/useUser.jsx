@@ -9,8 +9,8 @@ const useUser = () => {
   const initialData = user?.role || "";
   const axiosCommon = useAxiosCommon();
 
-  const { data } = useQuery({
-    queryKey: ["userRole", user?.email],
+  const { data: currentUser, refetch } = useQuery({
+    queryKey: ["user", user?.email],
     queryFn: async () => {
       if (!user?.email) {
         return;
@@ -22,7 +22,7 @@ const useUser = () => {
     initialData: initialData,
   });
 
-  return data;
+  return { currentUser, refetch };
 };
 
 export default useUser;
