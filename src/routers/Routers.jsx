@@ -5,7 +5,7 @@ import Community from "../pages/Community/Community";
 import Blogs from "../pages/Blogs/Blogs";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
-import PackageDetails from "../components/shared/PackageDetails";
+import PackageDetails from "../pages/PackageDetails/PackageDetails";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Dashboard from "../pages/dashboard/Dashboard";

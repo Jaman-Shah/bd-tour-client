@@ -6,7 +6,7 @@ const Packages = () => {
   const { packages, isLoading } = usePackages();
 
   return (
-    <div className="grid gird-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid gird-cols-1 md:grid-cols-3 gap-4 p-4 pb-8">
       {packages &&
         packages.map((item) => {
           return <PackagesCard key={item._id} item={item} />;
