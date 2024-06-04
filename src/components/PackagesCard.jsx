@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 
 const PackagesCard = ({ item }) => {
-  const { title, type, price, description, photos } = item;
+  const { _id, title, type, price, description, photos } = item;
   console.log(item);
 
   return (
@@ -22,7 +22,7 @@ const PackagesCard = ({ item }) => {
         <div className="bg-[#575FCF] text-white text-center pt-24 pb-8 px-8 rounded-b-2xl">
           <h1 className="text-2xl font-bold "> {title}</h1>
           <p className="mb-6">{description}</p>
-          <Link to="/package/details" className="border p-2 rounded-full">
+          <Link to={`/package/${_id}`} className="border p-2 rounded-full">
             Details
           </Link>
         </div>
