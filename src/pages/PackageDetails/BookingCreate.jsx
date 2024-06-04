@@ -22,7 +22,6 @@ const BookingCreate = ({ id, title, price }) => {
     setCurrentGuideEmail(currentGuide.email);
   };
 
-  console.log(guides);
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -35,6 +34,7 @@ const BookingCreate = ({ id, title, price }) => {
     const guide_email = currentGuideEmail; //this is getting from state
     const package_price = form.package_price.value;
     const order_date = startDate; // this is getting form state
+    console.log(order_date);
     const booking = {
       package_id,
       package_title,

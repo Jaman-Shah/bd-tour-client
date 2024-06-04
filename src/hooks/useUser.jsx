@@ -6,7 +6,7 @@ const useUser = () => {
   const { user } = useAuth();
 
   const isEnabled = !!user;
-  const initialData = user?.role || "";
+  const initialData = user || "";
   const axiosCommon = useAxiosCommon();
 
   const { data: currentUser, refetch } = useQuery({
