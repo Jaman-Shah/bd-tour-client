@@ -59,6 +59,9 @@ const BookingCreate = ({ id, title, price }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           axiosSecure.post(`/bookings`, booking).then((data) => {
+            if (data.data.message) {
+              return toast.error(`${data.data.message}`);
+            }
             if (data.data.acknowledged && data.data.insertedId) {
               toast.success("Order Success");
             }
