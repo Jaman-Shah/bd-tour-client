@@ -8,6 +8,7 @@ import ImagesSection from "./ImagesSection";
 import SectionHeader from "../../components/shared/SectionHeader";
 import AboutTheTour from "./AboutTheTour";
 import TourPlanSection from "./TourPlanSection";
+import BookingCreate from "./BookingCreate";
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -29,7 +30,7 @@ const PackageDetails = () => {
     initialData: initialData,
   });
 
-  const { photos, title, description, tour_plans } = packageItem;
+  const { _id, photos, title, price, description, tour_plans } = packageItem;
   if (isLoading) {
     return "Loading....";
   }
@@ -40,6 +41,7 @@ const PackageDetails = () => {
       <ImagesSection photos={photos} />
       <AboutTheTour description={description} />
       <TourPlanSection tour_plans={tour_plans} />
+      <BookingCreate id={_id} title={title} price={price} />
     </>
   );
 };
