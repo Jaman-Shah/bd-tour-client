@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import useUser from "../hooks/useUser";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const PackagesCard = ({ item }) => {
   const { currentUser } = useUser();
@@ -17,7 +18,9 @@ const PackagesCard = ({ item }) => {
         package_title: title,
         email,
       });
-      console.log(response.data);
+      if (response.data.acknowledged && response.data.insertedId) {
+        toast.success("Added to Wishlist");
+      }
     } catch (error) {
       console.log(error.message);
     }

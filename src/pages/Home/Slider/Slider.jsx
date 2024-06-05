@@ -9,6 +9,8 @@ import TourTypesCard from "../../../components/TourTypesCard";
 import { GiHiking } from "react-icons/gi";
 
 export default function Slider() {
+  const image =
+    "https://tbbd-flight.s3.ap-southeast-1.amazonaws.com/blogS64HbEutsiOOjUsJIZSy0s3k77j4LSLr.jpg";
   return (
     <div className="relative h-[400px] flex items-center">
       <Swiper
@@ -30,7 +32,7 @@ export default function Slider() {
         className="mySwiper h-full w-full"
       >
         <SwiperSlide className="h-full">
-          <TourTypesCard title="Hiking" icon={GiHiking} />
+          <TourTypesCard title="Hiking" image={image} icon={GiHiking} />
         </SwiperSlide>
         <SwiperSlide className="h-full">
           <TourTypesCard title="Tour 2" />

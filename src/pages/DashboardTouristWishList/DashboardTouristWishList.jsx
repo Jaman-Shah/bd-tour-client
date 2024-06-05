@@ -51,6 +51,7 @@ const DashboardTouristWishList = () => {
     }
   };
 
+  if (isLoading) return "Loading...";
   return (
     <div className="p-8">
       <div class="container mx-auto">
