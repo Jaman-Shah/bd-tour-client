@@ -13,7 +13,6 @@ import toast from "react-hot-toast";
 const Dashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const { currentUser, refetch } = useUser();
-  console.log(currentUser);
 
   const axiosSecure = useAxiosSecure();
 

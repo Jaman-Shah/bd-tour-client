@@ -41,16 +41,16 @@ const DashboardGuideAssignedTours = () => {
       if (result.acknowledged && result.modifiedCount) {
         toast.success(`This Booking is ${status}`);
       }
+      refetch();
     });
-    refetch();
   };
   const handleReject = (id, status) => {
     changeStatus(id, status).then((result) => {
       if (result.acknowledged && result.modifiedCount) {
         toast.success(`This Booking is ${status}`);
       }
+      refetch();
     });
-    refetch();
   };
 
   if (isLoading) return "Loading...";

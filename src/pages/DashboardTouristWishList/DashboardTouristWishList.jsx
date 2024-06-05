@@ -11,9 +11,9 @@ const DashboardTouristWishList = () => {
   const { currentUser } = useUser();
 
   const isEnabled = !!currentUser;
-  const initialData = currentUser || "";
+  const initialData = [];
   const {
-    data: wishlists,
+    data: wishlists = [],
     isLoading,
     refetch,
   } = useQuery({

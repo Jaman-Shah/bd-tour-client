@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SectionHeader from "./../../components/shared/SectionHeader";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
 import useAuth from "./../../hooks/useAuth";
 import useGetUsers from "../../hooks/useGetUsers";
+import useGetSingleUser from "../../hooks/useGetSingleUser";
 
 const DashboardAdminManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { users, isLoading, refetch } = useGetUsers();
+
+  const [selectedEmail, setSelectedEmail] = useState(null);
+
+  const {
+    singleUser,
+    isLoading: isSingleUserLoading,
+    refetch: refetchSingleUser,
+  } = useGetSingleUser(selectedEmail);
+
+  useEffect(() => {
+    if (selectedEmail) {
+      refetchSingleUser();
+    }
+  }, [selectedEmail, refetchSingleUser]);
 
   const handleUserRole = async (id, role, email) => {
     if (email === user.email) {
@@ -16,10 +31,23 @@ const DashboardAdminManageUser = () => {
     }
     const response = await axiosSecure.put(`/updateuser?id=${id}&role=${role}`);
     if (response.data.modifiedCount) {
-      toast.success(`User update to ${role}`);
+      toast.success(`User updated to ${role}`);
       refetch();
+      setSelectedEmail(email);
+      if (role === "guide") {
+        // creating guide info when a guide is created
+        const { _id, ...userWithoutId } = singleUser;
+        const guideCreateResponse = await axiosSecure.post(`guidesInfo`, {
+          ...userWithoutId,
+          createdAt: new Date(),
+          phone: "",
+          educations: [],
+          skills: [],
+          works_experiences: [],
+        });
+        console.log(guideCreateResponse.data);
+      }
     }
-    console.log(id, role);
   };
 
   if (isLoading) return "Loading.....";
@@ -28,7 +56,7 @@ const DashboardAdminManageUser = () => {
       <SectionHeader title="Manage Users" />
       <div className="p-8">
         <div class="container mx-auto">
-          <div class="overflow-x-auto">
+          <div class="overflow-x-auto overflow-y-auto">
             <table class="min-w-full bg-white rounded-lg shadow-md">
               <thead class="bg-blue-500 text-white">
                 <tr>
@@ -57,6 +85,7 @@ const DashboardAdminManageUser = () => {
                               handleUserRole(user._id, "guide", user.email)
                             }
                             className="p-2 border-none rounded-lg bg-yellow-400"
+                            // disabled={user.role !== "tourist"}
                           >
                             Make Guide
                           </button>
@@ -65,6 +94,7 @@ const DashboardAdminManageUser = () => {
                               handleUserRole(user._id, "admin", user.email)
                             }
                             className="p-2 border-none rounded-lg bg-green-400"
+                            // disabled={user.role !== "tourist"}
                           >
                             Make Admin
                           </button>
