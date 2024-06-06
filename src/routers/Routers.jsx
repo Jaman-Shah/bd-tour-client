@@ -8,13 +8,14 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import PackageDetails from "../pages/PackageDetails/PackageDetails";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import Dashboard from "../pages/dashboard/Dashboard";
 import DashboardProfile from "../pages/DashboardProfile/DashboardProfile";
 import DashboardTouristBookings from "../pages/DashboardTouristBookings/DashboardTouristBookings";
 import DashboardTouristWishList from "../pages/DashboardTouristWishList/DashboardTouristWishList";
 import DashboardGuideAssignedTours from "../pages/DashboardGuideAssignedTours/DashboardGuideAssignedTours";
 import DashboardAdminAddPackage from "../pages/DashboardAdminAddPackage/DashboardAdminAddPackage";
 import DashboardAdminManageUser from "../pages/DashboardAdminManageUser/DashboardAdminManageUser";
+import Dashboard from "./../pages/Dashboard/Dashboard";
+import GuidePage from "../pages/GuidePage/GuidePage";
 
 export const routers = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const routers = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "guide/:id",
+        element: <GuidePage />,
       },
       {
         path: "/dashboard",

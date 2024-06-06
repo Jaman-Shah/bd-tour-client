@@ -45,7 +45,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="h-screen flex">
+      <div className="flex h-screen">
         <div
           className={`relative ${
             sideBarOpen ? "w-1/5" : "w-1/24"
@@ -57,7 +57,7 @@ const Dashboard = () => {
           >
             {sideBarOpen ? "<" : ">"}
           </button>
-          <div className="flex flex-col py-24 px-1 text-2xl">
+          <div className="flex min-h-screen  flex-col py-24 px-1 text-2xl">
             <DashBoardItem
               link="/dashboard"
               icon={IoPersonCircleOutline}
@@ -114,7 +114,10 @@ const Dashboard = () => {
         <div
           className={`${sideBarOpen ? "w-4/5" : "w-full"} h-full bg-gray-200`}
         >
-          <Outlet />
+          <div className="overflow-auto h-screen">
+            {" "}
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

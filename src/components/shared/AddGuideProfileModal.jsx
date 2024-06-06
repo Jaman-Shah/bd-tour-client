@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Dialog,
@@ -6,30 +7,36 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
+import toast from "react-hot-toast";
+import { TiDelete } from "react-icons/ti";
 
-export default function PlansAddingModal({
-  plans,
-  setPlans,
-  isPlanModalOpen,
-  setIsPlanModalOpen,
-}) {
-  const handlePlanSubmit = (e) => {
+const AddGuideProfileModal = ({
+  heading,
+  data,
+  setData,
+  isModalOpen,
+  setIsModalOpen,
+}) => {
+  const handleAddData = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const details = form.details.value;
-    const plan = { title, details };
-    setPlans([...plans, plan]);
-    form.reset();
+    setData([...data, { title, details }]);
     console.log(title, details);
   };
 
-  const closeModal = () => {
-    setIsPlanModalOpen(false);
+  const handleSingleDataDelete = (title) => {
+    console.log(title);
+    const remainingData = data.filter(
+      (singleData) => singleData.title !== title
+    );
+    setData(remainingData);
   };
+
   return (
     <>
-      <Transition appear show={isPlanModalOpen}>
+      <Transition appear show={isModalOpen}>
         <Dialog
           as="div"
           className="relative z-10 focus:outline-none"
@@ -49,15 +56,15 @@ export default function PlansAddingModal({
                 <DialogPanel className="w-full max-w-md rounded-xl bg-blue-500 p-6 backdrop-blur-2xl">
                   <DialogTitle
                     as="h3"
-                    className="text-base/7 font-medium text-black"
+                    className="text-3xl font-medium text-black"
                   >
-                    Add Plans {`${plans.length}`}
+                    Add {heading}
                   </DialogTitle>
 
                   {/* -----------main works starts ---------- */}
-                  <form onSubmit={handlePlanSubmit} className="flex flex-col">
+                  <form onSubmit={handleAddData} className="flex flex-col">
                     <div>
-                      <p>Plan Title</p>
+                      <p>{heading} Title</p>
                       <input
                         type="text"
                         name="title"
@@ -66,7 +73,7 @@ export default function PlansAddingModal({
                       />
                     </div>
                     <div>
-                      <p>Plan Details</p>
+                      <p>{heading} Details</p>
                       <textarea
                         name="details"
                         type="text"
@@ -79,14 +86,44 @@ export default function PlansAddingModal({
                       type="submit"
                       className="rounded-full border border-black p-2"
                     >
-                      Add
+                      Add {data.length > 0 && "More"}
                     </button>
                   </form>
                   {/*------------ Main work ends -------------- */}
+                  <div>
+                    {data &&
+                      data.map((singleData, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="relative overflow-hidden bg-gray-300 rounded-full p-4 mt-2"
+                          >
+                            <h1 className="font-bold border-b border-black">
+                              Title : {singleData.title}
+                            </h1>
+
+                            <p> Details: {singleData.details}</p>
+                            <button
+                              onClick={() =>
+                                handleSingleDataDelete(singleData.title)
+                              }
+                              className="absolute bg-black text-white  p-1 rounded-xl right-3 top-2"
+                            >
+                              <TiDelete className="text-xl" />
+                            </button>
+                          </div>
+                        );
+                      })}
+                  </div>
                   <div className="mt-4">
                     <Button
                       className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                      onClick={closeModal}
+                      onClick={() => {
+                        if (data.length < 1) {
+                          return toast.error("Add At Least 1 Data");
+                        }
+                        setIsModalOpen(false);
+                      }}
                     >
                       Ok
                     </Button>
@@ -99,4 +136,6 @@ export default function PlansAddingModal({
       </Transition>
     </>
   );
-}
+};
+
+export default AddGuideProfileModal;

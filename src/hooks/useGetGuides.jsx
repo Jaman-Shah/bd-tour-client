@@ -4,7 +4,7 @@ import useAxiosCommon from "./useAxiosCommon";
 const useGetGuides = () => {
   const axiosCommon = useAxiosCommon();
   const {
-    data: guides,
+    data: guides = [],
     isLoading,
     refetch,
   } = useQuery({

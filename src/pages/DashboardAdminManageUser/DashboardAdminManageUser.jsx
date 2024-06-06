@@ -4,26 +4,11 @@ import useAxiosSecure from "./../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
 import useAuth from "./../../hooks/useAuth";
 import useGetUsers from "../../hooks/useGetUsers";
-import useGetSingleUser from "../../hooks/useGetSingleUser";
 
 const DashboardAdminManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { users, isLoading, refetch } = useGetUsers();
-
-  const [selectedEmail, setSelectedEmail] = useState(null);
-
-  const {
-    singleUser,
-    isLoading: isSingleUserLoading,
-    refetch: refetchSingleUser,
-  } = useGetSingleUser(selectedEmail);
-
-  useEffect(() => {
-    if (selectedEmail) {
-      refetchSingleUser();
-    }
-  }, [selectedEmail, refetchSingleUser]);
 
   const handleUserRole = async (id, role, email) => {
     if (email === user.email) {
@@ -33,20 +18,6 @@ const DashboardAdminManageUser = () => {
     if (response.data.modifiedCount) {
       toast.success(`User updated to ${role}`);
       refetch();
-      setSelectedEmail(email);
-      if (role === "guide") {
-        // creating guide info when a guide is created
-        const { _id, ...userWithoutId } = singleUser;
-        const guideCreateResponse = await axiosSecure.post(`guidesInfo`, {
-          ...userWithoutId,
-          createdAt: new Date(),
-          phone: "",
-          educations: [],
-          skills: [],
-          works_experiences: [],
-        });
-        console.log(guideCreateResponse.data);
-      }
     }
   };
 
