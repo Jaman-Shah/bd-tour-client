@@ -12,13 +12,12 @@ const GuideReview = ({ guideEmail }) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["guideReviews"],
+    queryKey: ["guideReviews", guideEmail],
     queryFn: async () => {
       const response = await axiosCommon(`/reviews/guides/${guideEmail}`);
       return response.data;
     },
     enabled: !!guideEmail,
-    initialData: [],
   });
   if (isLoading) return "Loading..";
   return (

@@ -1,23 +1,8 @@
 import React from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useUser from "./../../hooks/useUser";
-import { useQuery } from "@tanstack/react-query";
+import useGetMyBookings from "../../hooks/useGetMyBookings";
 
 const DashboardTouristBookings = () => {
-  const { user } = useUser();
-  const axiosSecure = useAxiosSecure();
-  const {
-    data: my_bookings,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["my_bookings"],
-    queryFn: async () => {
-      const response = await axiosSecure(`/bookings/:${user?.email}`);
-      return response.data;
-    },
-  });
-  console.log(my_bookings);
+  const { my_bookings } = useGetMyBookings();
   return (
     <div className="p-8">
       <div class="container mx-auto">

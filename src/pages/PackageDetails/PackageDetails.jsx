@@ -21,7 +21,7 @@ const PackageDetails = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["packageItem"],
+    queryKey: ["packageItem", id],
     queryFn: async () => {
       const response = await axiosCommon(`/package/${id}`);
       return response.data;

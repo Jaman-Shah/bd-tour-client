@@ -7,7 +7,8 @@ const ReviewsSection = ({ guidesReviews, isLoading }) => {
     return "Loading.....";
   }
 
-  if (guidesReviews.length < 1) return <h1>NO review</h1>;
+  if (guidesReviews.length < 1)
+    return <h1 className="text-center my-4 font-bold">No review</h1>;
   return (
     <div className="p-16 py-4">
       {guidesReviews &&

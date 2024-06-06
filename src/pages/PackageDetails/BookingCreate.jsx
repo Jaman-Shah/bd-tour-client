@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
-import useGetBookings from "../../hooks/useGetBookings";
 
 const BookingCreate = ({ id, title, price }) => {
   const [startDate, setStartDate] = useState(new Date());

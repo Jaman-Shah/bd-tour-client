@@ -1,6 +1,7 @@
 import React from "react";
 import useUser from "../../hooks/useUser";
 import DashboardGuideAddProfile from "../Dashboard/DashboardGuideAddProfile/DashboardGuideAddProfile";
+import DashboardTouristAddStory from "../Dashboard/DashboardTouristAddStory/DashboardTouristAddStory";
 
 const DashboardProfile = () => {
   const { currentUser, refetch } = useUser();
@@ -22,6 +23,7 @@ const DashboardProfile = () => {
         </div>
       </div>
       <div>{role === "guide" && <DashboardGuideAddProfile />}</div>
+      <div>{role === "tourist" && <DashboardTouristAddStory />}</div>
     </div>
   );
 };
