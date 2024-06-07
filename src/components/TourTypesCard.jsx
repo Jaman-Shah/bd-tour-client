@@ -1,16 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const TourTypesCard = ({ title, image, icon: Icon }) => {
+const TourTypesCard = ({ title, type, image, icon: Icon }) => {
   return (
-    <div
+    <Link
+      to={`/packages/${type}`}
       style={{ backgroundImage: `url(${image})` }}
       className="h-full w-full bg-cover bg-center   rounded-2xl  flex items-center justify-center text-[#575FCF]  cursor-pointer"
     >
-      <div>
+      <div className="flex flex-col  items-center">
         {Icon && <Icon className="text-[80px]" />}
-        <p className="font-bold text-3xl uppercase border-t mt-4 ">{title}</p>
+        <p className="font-bold text-3xl uppercase border-t mt-4">{title}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

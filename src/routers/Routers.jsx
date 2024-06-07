@@ -18,6 +18,7 @@ import Dashboard from "./../pages/Dashboard/Dashboard";
 import GuidePage from "../pages/GuidePage/GuidePage";
 import StoryDetails from "../pages/StoryDetails/StoryDetails";
 import AllStories from "../pages/AllStories/AllStories";
+import PackagesByTypePage from "../pages/PackagesByTypePage/PackagesByTypePage";
 
 export const routers = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ export const routers = createBrowserRouter([
       {
         path: "/stories/:id",
         element: <StoryDetails />,
+      },
+      {
+        path: "/packages/:type",
+        element: <PackagesByTypePage />,
       },
       {
         path: "/dashboard",

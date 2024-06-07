@@ -28,7 +28,7 @@ const PackagesCard = ({ item }) => {
 
   return (
     <div>
-      <div className="h-52 relative bg-blue-200 mb-32 rounded-2xl">
+      <div className="h-52 relative bg-blue-200 mb-52 rounded-2xl">
         <div className="h-1/2"></div>
         <div
           className={`absolute h-3/4 w-1/2 top-0  transform translate-x-1/2 bg-pink-500 rounded-b-full bg-cover bg-center bg-no-repeat`}
@@ -43,8 +43,9 @@ const PackagesCard = ({ item }) => {
           <p className="font-bold text-2xl">{price}$ </p>
         </div>
         <div className="bg-[#575FCF] text-white text-center pt-24 pb-8 px-8 rounded-b-2xl">
-          <h1 className="text-2xl font-bold "> {title}</h1>
-          <p className="mb-6">{description}</p>
+          <h1>Type: {type}</h1>
+          <h1 className="text-2xl font-bold text-black"> {title}</h1>
+          <p className="mb-6">{description.slice(0, 100) + ".............."}</p>
           <Link to={`/package/${_id}`} className="border p-2 rounded-full">
             Details
           </Link>
