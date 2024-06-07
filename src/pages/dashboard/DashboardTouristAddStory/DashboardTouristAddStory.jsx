@@ -25,12 +25,14 @@ const DashboardTouristAddStory = () => {
   const handleCreateStory = async (e) => {
     e.preventDefault();
     const form = e.target;
+    const story_creator_name = currentUser.name;
     const story_creator_email = currentUser.email;
     const story_creator_image = currentUser.photo_url;
     const package_id = selectedTour.package_id;
     const tour_title = form.tour_title.value;
     const story_text = form.story_text.value;
     const story = {
+      story_creator_name,
       story_creator_email,
       story_creator_image,
       package_id,
