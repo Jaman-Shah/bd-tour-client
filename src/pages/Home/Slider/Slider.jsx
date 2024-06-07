@@ -5,10 +5,13 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import TourTypesCard from "../../../components/TourTypesCard";
-import { GiHiking } from "react-icons/gi";
+import HomeBannerItem from "../HomeBannerItem/HomeBannerItem";
+import usePackages from "../../../hooks/usePackages";
 
 export default function Slider() {
+  const { packages } = usePackages();
+
+  console.log("packages", packages);
   const image =
     "https://tbbd-flight.s3.ap-southeast-1.amazonaws.com/blogS64HbEutsiOOjUsJIZSy0s3k77j4LSLr.jpg";
   return (
@@ -31,21 +34,22 @@ export default function Slider() {
         spaceBetween={16}
         className="mySwiper h-full w-full"
       >
-        <SwiperSlide className="h-full">
-          <TourTypesCard title="Hiking" image={image} icon={GiHiking} />
-        </SwiperSlide>
-        <SwiperSlide className="h-full">
-          <TourTypesCard title="Tour 2" />
-        </SwiperSlide>
-        <SwiperSlide className="h-full">
-          <TourTypesCard title="Tour 3" />
-        </SwiperSlide>
-        <SwiperSlide className="h-full">
-          <TourTypesCard title="Tour 4" />
-        </SwiperSlide>
-        <SwiperSlide className="h-full">
-          <TourTypesCard title="Tour 5" />
-        </SwiperSlide>
+        {packages &&
+          packages.map((singlePackage) => {
+            const imageUrl = singlePackage?.photos?.[0];
+            console.log(imageUrl);
+            return (
+              <SwiperSlide>
+                <HomeBannerItem
+                  key={singlePackage?._id}
+                  heading={singlePackage?.title}
+                  image={singlePackage?.photos?.[0]}
+                  details={singlePackage?.description}
+                  className="h-full"
+                />
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
       <div className="swiper-button-next absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center justify-center h-10 w-10  bg-opacity-50 text-white rounded-full cursor-pointer z-10"></div>
       <div className="swiper-button-prev absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center justify-center h-10 w-10  bg-opacity-50 text-white rounded-full cursor-pointer z-10"></div>

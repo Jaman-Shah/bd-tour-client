@@ -9,8 +9,8 @@ const Home = () => {
     <div>
       <Slider />
       <TourismAndTravelGuide />
-      <Stories />
       <TourType />
+      <Stories />
     </div>
   );
 };

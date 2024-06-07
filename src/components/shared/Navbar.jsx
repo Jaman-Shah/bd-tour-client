@@ -187,9 +187,9 @@ const Navbar = () => {
             <div
               className={`${
                 showProfileMenu ? "absolute" : "hidden"
-              } md:-bottom-[200px] right-0 bg-green-300 border-2 shadow-2xl border-black p-4 rounded-2xl`}
+              } md:-bottom-[200px] right-0 top-10 bg-green-300 border-2 shadow-2xl border-black p-4  rounded-2xl`}
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
                 <Link
                   onClick={toggleProfile}
                   to="/dashboard"
@@ -204,11 +204,11 @@ const Navbar = () => {
                 >
                   Offer Announcement
                 </Link>
-                <p className="p-2 font-bold rounded-2xl bg-gray-500 text-white">
-                  Name
+                <p className="p-2 font-bold rounded-2xl text-black">
+                  {user?.displayName}
                 </p>
-                <p className="p-2 font-bold rounded-2xl bg-gray-500 text-white">
-                  Email
+                <p className="p-2 font-bold rounded-2xl text-black">
+                  {user?.email}
                 </p>
               </div>
             </div>

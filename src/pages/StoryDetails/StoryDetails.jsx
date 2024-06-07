@@ -90,10 +90,10 @@ const StoryDetails = () => {
           </div>
           <div className="flex justify-center gap-4">
             <FacebookShareButton url={currentPageUrl}>
-              <FacebookIcon />
+              <FacebookIcon className="rounded-full" />
             </FacebookShareButton>
             <TwitterShareButton url={currentPageUrl}>
-              <TwitterIcon />
+              <TwitterIcon className="rounded-full" />
             </TwitterShareButton>
           </div>
         </div>
