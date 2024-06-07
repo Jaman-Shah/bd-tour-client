@@ -16,6 +16,8 @@ import DashboardAdminAddPackage from "../pages/DashboardAdminAddPackage/Dashboar
 import DashboardAdminManageUser from "../pages/DashboardAdminManageUser/DashboardAdminManageUser";
 import Dashboard from "./../pages/Dashboard/Dashboard";
 import GuidePage from "../pages/GuidePage/GuidePage";
+import StoryDetails from "../pages/StoryDetails/StoryDetails";
+import AllStories from "../pages/AllStories/AllStories";
 
 export const routers = createBrowserRouter([
   {
@@ -57,6 +59,14 @@ export const routers = createBrowserRouter([
       {
         path: "guide/:id",
         element: <GuidePage />,
+      },
+      {
+        path: "/all-stories",
+        element: <AllStories />,
+      },
+      {
+        path: "/stories/:id",
+        element: <StoryDetails />,
       },
       {
         path: "/dashboard",

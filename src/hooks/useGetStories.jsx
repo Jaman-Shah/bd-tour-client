@@ -11,7 +11,7 @@ const useGetStories = () => {
   } = useQuery({
     queryKey: ["stories"],
     queryFn: async () => {
-      const response = await axiosCommon("/stories");
+      const response = await axiosCommon(`/stories`);
       return response.data;
     },
   });

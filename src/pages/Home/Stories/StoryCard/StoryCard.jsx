@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const StoryCard = ({ story }) => {
   const {
+    _id,
     tour_title,
     story_creator_email,
     story_creator_name,
@@ -10,7 +11,10 @@ const StoryCard = ({ story }) => {
     story_text,
   } = story;
   return (
-    <Link className="cursor-pointer border flex hover:bg-red-200 rounded-2xl">
+    <Link
+      to={`/stories/${_id}`}
+      className="cursor-pointer border flex hover:bg-red-200 rounded-2xl"
+    >
       {/* left side  */}
       <div className="p-4 flex flex-col items-center justify-center">
         <div
