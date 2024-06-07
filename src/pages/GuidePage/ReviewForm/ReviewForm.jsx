@@ -2,13 +2,22 @@ import React from "react";
 import toast from "react-hot-toast";
 import useUser from "../../../hooks/useUser";
 import useAxiosCommon from "../../../hooks/useAxiosCommon";
+import useAuth from "../../../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ReviewForm = ({ guideEmail, refetch }) => {
+  const { user } = useAuth();
   const { currentUser } = useUser();
   const axiosCommon = useAxiosCommon();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      navigate("/login", { state: { from: location } });
+      return null;
+    }
     const form = e.target;
     const comment = form.comment.value;
     const rating = parseInt(form.rating.value);

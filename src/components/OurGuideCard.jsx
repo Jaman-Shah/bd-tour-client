@@ -9,7 +9,7 @@ const OurGuideCard = ({ guide, isLoading }) => {
       <div className="h-full flex  flex-col justify-center items-center pt-[100px] text-white p-4 bg-[#3C40C6] border relative rounded-xl">
         <div className="font-bold rounded-2xl flex flex-col gap-4 border-t border-b p-2 pt-4 border-white">
           <h1 className="text-2xl  pl-4">{name}</h1>
-          <p className=" pl-4">{"desc"}</p>
+
           <p>{email}</p>
         </div>
         <Link to={`/guide/${_id}`} className="p-2 mt-2 rounded-full border">

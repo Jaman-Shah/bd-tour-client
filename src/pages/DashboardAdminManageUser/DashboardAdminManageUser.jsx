@@ -56,7 +56,7 @@ const DashboardAdminManageUser = () => {
                               handleUserRole(user._id, "guide", user.email)
                             }
                             className="p-2 border-none rounded-lg bg-yellow-400"
-                            // disabled={user.role !== "tourist"}
+                            disabled={user.role !== "tourist"}
                           >
                             Make Guide
                           </button>
@@ -65,7 +65,7 @@ const DashboardAdminManageUser = () => {
                               handleUserRole(user._id, "admin", user.email)
                             }
                             className="p-2 border-none rounded-lg bg-green-400"
-                            // disabled={user.role !== "tourist"}
+                            disabled={user.role !== "tourist"}
                           >
                             Make Admin
                           </button>

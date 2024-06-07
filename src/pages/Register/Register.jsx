@@ -8,11 +8,11 @@ import { photoUpload } from "../../api/utils/photoUpload";
 import { auth } from "../../firebase/firebase.config";
 import { updateProfile } from "firebase/auth";
 import useSaveUser from "../../hooks/useSaveUser";
+import ActionLoader from "../../components/shared/ActionLoader";
 
 const Register = () => {
-  const { user, createUser, signInWithGoogle, loading, setLoading } = useAuth();
+  const { user, createUser, signInWithGithub, loading, setLoading } = useAuth();
   const saveUser = useSaveUser();
-  const [photoUrl, setPhotoUrl] = useState("");
 
   const [eyeOpen, setEyeOpen] = useState(false);
   console.log(user);
@@ -54,10 +54,10 @@ const Register = () => {
     }
   };
 
-  // google popup login function
-  const handleGoogleLogIn = () => {
+  // github popup login function
+  const handleGithubLogin = () => {
     setLoading(true);
-    signInWithGoogle()
+    signInWithGithub()
       .then((result) => {
         saveUser(
           result.user.displayName,
@@ -70,7 +70,7 @@ const Register = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Google Sign-In Failed");
+        toast.error("Github Sign-In Failed");
         setLoading(false);
       });
   };
@@ -120,19 +120,17 @@ const Register = () => {
               </span>
             </div>
             <div className="text-center">
-              <input
-                type="submit"
-                value={loading ? "Loading..." : "Register"}
-                className="border p-2 cursor-pointer"
-              />
+              <button type="submit" className="border p-2 cursor-pointer">
+                {loading ? <ActionLoader /> : "Register"}
+              </button>
             </div>
           </form>
           <div className="flex justify-center gap-2">
             <button
-              onClick={handleGoogleLogIn}
+              onClick={handleGithubLogin}
               className="border p-2 border-black"
             >
-              Google
+              GitHub
             </button>
           </div>
         </div>

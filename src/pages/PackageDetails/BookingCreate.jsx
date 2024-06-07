@@ -7,8 +7,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import useAxiosSecure from "./../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BookingCreate = ({ id, title, price }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [startDate, setStartDate] = useState(new Date());
   const [currentGuideEmail, setCurrentGuideEmail] = useState("");
   const { currentUser } = useUser();
@@ -23,6 +28,10 @@ const BookingCreate = ({ id, title, price }) => {
 
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      navigate("/login", { state: { from: location } });
+      return null;
+    }
     const form = e.target;
     const package_id = id; // this is getting form props
     const package_title = form.package_title.value;
@@ -33,7 +42,7 @@ const BookingCreate = ({ id, title, price }) => {
     const guide_email = currentGuideEmail; //this is getting from state
     const package_price = form.package_price.value;
     const order_date = startDate; // this is getting form state
-    console.log(order_date);
+
     const booking = {
       package_id,
       package_title,
@@ -184,7 +193,7 @@ const BookingCreate = ({ id, title, price }) => {
           </div>
 
           <button type="submit" className="border-2 mt-4 border-green-500 p-4">
-            Book This
+            Book Now
           </button>
         </form>
       </div>

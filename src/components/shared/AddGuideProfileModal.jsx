@@ -23,7 +23,7 @@ const AddGuideProfileModal = ({
     const title = form.title.value;
     const details = form.details.value;
     setData([...data, { title, details }]);
-    console.log(title, details);
+    form.reset();
   };
 
   const handleSingleDataDelete = (title) => {

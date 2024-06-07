@@ -7,6 +7,7 @@ import { auth } from "../../../firebase/firebase.config";
 import { updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
 import useAxiosSecure from "./../../../hooks/useAxiosSecure";
+import ActionLoader from "./../../../components/shared/ActionLoader";
 
 const DashboardGuideAddProfile = () => {
   const { currentUser, refetch } = useUser();
@@ -54,7 +55,7 @@ const DashboardGuideAddProfile = () => {
       const response = await axiosSecure.put("/users", {
         name,
         email,
-        photo_url: uploadedPhotoUrl,
+        photo_url: uploadedPhotoUrl || currentUser.photo_url,
         phone,
         skills,
         educations,
@@ -120,8 +121,8 @@ const DashboardGuideAddProfile = () => {
         <div>
           <p>Change Photo</p>
           <div className="h-16 relative w-full border-2 border-black p-2 rounded-xl">
-            <input type="file" className="" name="photo" required />
-            {photoUploadLoading && "Loading..."}
+            <input type="file" className="" name="photo" />
+            {photoUploadLoading && <ActionLoader />}
             <img
               src={photoUrl}
               alt=""

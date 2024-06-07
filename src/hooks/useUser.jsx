@@ -9,7 +9,11 @@ const useUser = () => {
   const initialData = user || "";
   const axiosCommon = useAxiosCommon();
 
-  const { data: currentUser, refetch } = useQuery({
+  const {
+    data: currentUser,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       if (!user?.email) {
@@ -22,7 +26,7 @@ const useUser = () => {
     initialData: initialData,
   });
 
-  return { currentUser, refetch };
+  return { currentUser, refetch, isLoading };
 };
 
 export default useUser;

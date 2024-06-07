@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { photoUpload } from "../api/utils/photoUpload";
 import toast from "react-hot-toast";
+import ActionLoader from "./shared/ActionLoader";
 
 export default function PhotoAddingModal({
   loading,
@@ -87,7 +88,7 @@ export default function PhotoAddingModal({
                       <form onSubmit={handleSubmit} className="flex flex-col">
                         <input type="file" name="image" accept="image/*" />
                         <button className="border p-2 mt-2 rounded-full">
-                          {loading ? "Uploading..." : "Upload"}
+                          {loading ? <ActionLoader /> : "Upload"}
                         </button>
                       </form>
                     </div>
