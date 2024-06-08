@@ -12,8 +12,7 @@ export default function Slider() {
   const { packages } = usePackages();
 
   console.log("packages", packages);
-  const image =
-    "https://tbbd-flight.s3.ap-southeast-1.amazonaws.com/blogS64HbEutsiOOjUsJIZSy0s3k77j4LSLr.jpg";
+
   return (
     <div className="relative h-[400px] flex items-center">
       <Swiper

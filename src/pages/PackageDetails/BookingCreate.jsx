@@ -62,8 +62,9 @@ const BookingCreate = ({ id, title, price }) => {
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Confirm ",
+        cancelButtonColor: "green",
+        confirmButtonText: "Confirm your Booking ",
+        cancelButtonText: "Go to your Bookings",
       }).then((result) => {
         if (result.isConfirmed) {
           axiosSecure.post(`/bookings`, booking).then((data) => {
@@ -74,6 +75,8 @@ const BookingCreate = ({ id, title, price }) => {
               toast.success("Order Success");
             }
           });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          window.location.href = "../dashboard/tourist-bookings";
         }
       });
     } catch (error) {

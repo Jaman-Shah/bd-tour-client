@@ -13,7 +13,7 @@ const StoryCard = ({ story }) => {
   return (
     <Link
       to={`/stories/${_id}`}
-      className="cursor-pointer border flex hover:bg-red-200 rounded-2xl"
+      className="cursor-pointer border flex flex-col md:flex-row hover:bg-red-200 rounded-2xl"
     >
       {/* left side  */}
       <div className="p-4 flex flex-col items-center justify-center">
