@@ -5,6 +5,8 @@ import { toast } from "react-hot-toast";
 import useAuth from "./../../hooks/useAuth";
 import useGetUsers from "../../hooks/useGetUsers";
 import Select from "react-select";
+import ActionLoader from "../../components/shared/ActionLoader";
+import useUserCount from "../../hooks/useUserCount";
 
 const DashboardAdminManageUser = () => {
   const axiosSecure = useAxiosSecure();
@@ -12,9 +14,22 @@ const DashboardAdminManageUser = () => {
 
   const [name, setName] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { usersCount } = useUserCount();
+  const itemPerPage = 10;
+  const numberOfPages = Math.ceil(usersCount / itemPerPage);
+
+  const pages = [...Array(numberOfPages).keys()];
 
   // passing values to custom hook
-  const { users, isLoading, refetch } = useGetUsers(name, selectedRole);
+  const { users, isLoading, refetch } = useGetUsers(
+    name,
+    selectedRole,
+    currentPage,
+    itemPerPage
+  );
+  console.log(users.length);
   // react select options
   const options = [
     { value: "admin", label: "Admin" },
@@ -44,7 +59,6 @@ const DashboardAdminManageUser = () => {
     refetch();
   };
 
-  if (isLoading) return "Loading.....";
   return (
     <div>
       <SectionHeader title="Manage Users" />
@@ -72,7 +86,7 @@ const DashboardAdminManageUser = () => {
             }}
           />
           <button type="submit" className="h-12   bg-blue-500 px-2">
-            Search
+            {isLoading ? <ActionLoader /> : "Search"}
           </button>
         </form>
       </div>
@@ -127,6 +141,47 @@ const DashboardAdminManageUser = () => {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="my-2 flex justify-center gap-2">
+          <button
+            onClick={() => {
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+              }
+              refetch();
+            }}
+            className={`border-2 border-black px-4 py-2`}
+          >
+            Previous
+          </button>
+          {pages &&
+            pages.map((page) => {
+              return (
+                <button
+                  onClick={() => {
+                    setCurrentPage(page + 1);
+                    refetch();
+                  }}
+                  className={`border-2 border-black px-4 py-2 ${
+                    currentPage === page + 1 ? "bg-red-400" : ""
+                  }`}
+                  key={page}
+                >
+                  {page + 1}
+                </button>
+              );
+            })}
+          <button
+            onClick={() => {
+              if (currentPage < numberOfPages) {
+                setCurrentPage(currentPage + 1);
+                refetch();
+              }
+            }}
+            className={`border-2 border-black px-4 py-2`}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
