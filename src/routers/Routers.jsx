@@ -19,9 +19,6 @@ import GuidePage from "../pages/GuidePage/GuidePage";
 import StoryDetails from "../pages/StoryDetails/StoryDetails";
 import AllStories from "../pages/AllStories/AllStories";
 import PackagesByTypePage from "../pages/PackagesByTypePage/PackagesByTypePage";
-import PrivateRouter from "./PrivateRouter";
-import GuidePrivateRouter from "./GuidePrivateRouter";
-import AdminPrivateRouter from "./AdminPrivateRouter";
 
 export const routers = createBrowserRouter([
   {
@@ -78,11 +75,7 @@ export const routers = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: (
-          <PrivateRouter>
-            <Dashboard />
-          </PrivateRouter>
-        ),
+        element: <Dashboard />,
         children: [
           {
             path: "",
@@ -98,29 +91,16 @@ export const routers = createBrowserRouter([
           },
           {
             path: "guide-assigned-tours",
-            element: (
-              <GuidePrivateRouter>
-                <DashboardGuideAssignedTours />
-              </GuidePrivateRouter>
-            ),
+            element: <DashboardGuideAssignedTours />,
           },
           {
             path: "admin-add-packages",
-            element: (
-              <AdminPrivateRouter>
-                <DashboardAdminAddPackage />
-              </AdminPrivateRouter>
-            ),
+            element: <DashboardAdminAddPackage />,
           },
           {
             path: "admin-manage-users",
-            element: (
-              <AdminPrivateRouter>
-                <DashboardAdminManageUser />
-              </AdminPrivateRouter>
-            ),
+            element: <DashboardAdminManageUser />,
           },
-          {},
         ],
       },
     ],
