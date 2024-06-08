@@ -49,7 +49,7 @@ const ReviewForm = ({ guideEmail, refetch }) => {
   return (
     <div className="">
       <form onSubmit={handleReviewSubmit}>
-        <div className="flex p-16 py-2 gap-2">
+        <div className="flex p-4 md:p-16 py-2 gap-2">
           <div className=" w-4/5 h-full">
             <h1 className="font-bold mb-4">Comment :</h1>
             <input
@@ -66,7 +66,7 @@ const ReviewForm = ({ guideEmail, refetch }) => {
             <select
               name="rating"
               id=""
-              className="h-24 w-full border border-black text-center font-thin text-[34px]"
+              className="h-24 w-full border border-black text-center font-thin text-xm md:text-[34px]"
               required
             >
               <option value="0">Add Rating</option>
@@ -78,7 +78,7 @@ const ReviewForm = ({ guideEmail, refetch }) => {
             </select>
           </div>
         </div>
-        <div className="text-end px-16 ">
+        <div className="text-end px-4 md:px-16 ">
           <button type="submit" className="border w-full border-black p-4">
             Submit
           </button>

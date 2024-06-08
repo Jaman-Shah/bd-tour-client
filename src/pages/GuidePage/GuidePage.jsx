@@ -34,14 +34,14 @@ const GuidePage = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row border-2 rounded-xl shadow-2xl items-center p-24 gap-2">
-        <div className="w-1/3 border-r-[20px] border-blue-500 p-4 flex items-center justify-center ">
+      <div className="flex flex-col md:flex-row border-2 rounded-xl shadow-2xl items-center p-4 md:p-24 gap-2">
+        <div className="w-full md:w-1/3 md:border-r-[20px] border-blue-500 p-0 md:p-4 flex items-center justify-center ">
           <div
-            className="bg-cover bg-center shadow2xl  text-center h-52 w-52  rounded-2xl"
+            className="bg-cover bg-center shadow2xl  text-center h-60 md:h-52 w-64 md:w-52  rounded-2xl"
             style={{ backgroundImage: `url(${photo_url})` }}
           ></div>
         </div>
-        <div className="w-2/3 p-4">
+        <div className="w-full md:w-2/3 p-0 md:p-4">
           <div className="border p-4 rounded-3xl">
             <h1 className="font-thin text-[50px]">{name}</h1>
             <p className="font-bold text-2xl">{email}</p>
