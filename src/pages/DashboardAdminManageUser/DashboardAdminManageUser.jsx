@@ -4,11 +4,23 @@ import useAxiosSecure from "./../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
 import useAuth from "./../../hooks/useAuth";
 import useGetUsers from "../../hooks/useGetUsers";
+import Select from "react-select";
 
 const DashboardAdminManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { users, isLoading, refetch } = useGetUsers();
+
+  const [name, setName] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+
+  // passing values to custom hook
+  const { users, isLoading, refetch } = useGetUsers(name, selectedRole);
+  // react select options
+  const options = [
+    { value: "admin", label: "Admin" },
+    { value: "guide", label: "Guide" },
+    { value: "tourist", label: "Tourist" },
+  ];
 
   const handleUserRole = async (id, role, email) => {
     if (email === user.email) {
@@ -21,10 +33,49 @@ const DashboardAdminManageUser = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    // const role = selectedRole.value;
+    // setSelectedRole(role);
+    setName(name);
+
+    refetch();
+  };
+
   if (isLoading) return "Loading.....";
   return (
     <div>
       <SectionHeader title="Manage Users" />
+      <div className="container text-center  my-2 ">
+        <h1 className="text-center  text-2xl mb-4">Search User</h1>
+        <form
+          onSubmit={handleSearch}
+          className="flex items-center  justify-center gap-2"
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            className="h-12 px-4"
+          />
+          <Select
+            options={options}
+            onChange={(selectedOption) => setSelectedRole(selectedOption.value)}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? "grey" : "red",
+                height: 50,
+              }),
+            }}
+          />
+          <button type="submit" className="h-12   bg-blue-500 px-2">
+            Search
+          </button>
+        </form>
+      </div>
       <div className="p-8">
         <div class="container mx-auto">
           <div class="overflow-x-auto overflow-y-auto">
