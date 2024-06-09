@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useGetMyBookings from "../../hooks/useGetMyBookings";
+import PaymentModal from "../../components/PaymentModal";
+import ActionLoader from "./../../components/shared/ActionLoader";
 
 const DashboardTouristBookings = () => {
-  const { my_bookings } = useGetMyBookings();
+  const { my_bookings, isLoading, refetch } = useGetMyBookings();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [booking, setBooking] = useState({});
+
+  const handleModalOpen = (booking) => {
+    setIsModalOpen(true);
+    setBooking(booking);
+  };
+
+  if (isLoading) return <ActionLoader />;
   return (
     <div className="p-8">
       <div class="container mx-auto">
@@ -44,35 +56,26 @@ const DashboardTouristBookings = () => {
                       <td class="py-3 px-4">{status}</td>
                       <td class="flex justify-center px-3 gap-8">
                         {status === "In Review" ? (
-                          <button
-                            onClick={() =>
-                              handleUserRole(
-                                booking._id,
-                                "guide",
-                                booking.email
-                              )
-                            }
-                            className="p-2 border-none rounded-lg bg-yellow-400"
-                          >
+                          <button className="p-2 border-none rounded-lg bg-yellow-400">
                             Cancel
                           </button>
                         ) : status === "Accepted" ? (
                           <button
-                            onClick={() =>
-                              handleUserRole(user._id, "admin", user.email)
-                            }
+                            onClick={() => handleModalOpen(booking)}
                             className="p-2 border-none rounded-lg bg-green-400"
                           >
                             Pay
                           </button>
+                        ) : status === "Rejected" ? (
+                          <button className="p-2 border-none rounded-lg bg-red-500">
+                            Rejected
+                          </button>
                         ) : (
                           <button
-                            onClick={() =>
-                              handleUserRole(user._id, "admin", user.email)
-                            }
-                            className="p-2 border-none rounded-lg bg-red-500"
+                            className="p-2 border-none rounded-lg bg-blue-500"
+                            disabled
                           >
-                            Rejected
+                            Paid
                           </button>
                         )}
                       </td>
@@ -83,6 +86,14 @@ const DashboardTouristBookings = () => {
           </table>
         </div>
       </div>
+      {booking && !isLoading && (
+        <PaymentModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          booking={booking}
+          refetch={refetch}
+        />
+      )}
     </div>
   );
 };

@@ -8,12 +8,15 @@ import useSaveUser from "../../hooks/useSaveUser";
 import ActionLoader from "../../components/shared/ActionLoader";
 
 const Login = () => {
-  const { user, loginUser, signInWithGithub, loading, setLoading } = useAuth();
+  const { loginUser, signInWithGithub, loading, setLoading } = useAuth();
   const saveUser = useSaveUser();
 
   const [eyeOpen, setEyeOpen] = useState(false);
-  console.log(user);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,14 +70,17 @@ const Login = () => {
             <p className="mb-2 font-bold">Email : </p>
             <input
               className="w-full h-10 border border-black p-2 mb-4"
-              {...register("email", { required: true })}
+              {...register("email", { required: "Email is required" })}
             />
+            {errors.email && (
+              <p className="text-red-600">{errors.email.message}</p>
+            )}
             <p className="mb-2 font-bold">Password :</p>
             <div className="relative">
               <input
                 type={eyeOpen ? "text" : "password"}
                 className="w-full h-10 border border-black p-2 mb-4"
-                {...register("password", { required: true })}
+                {...register("password", { required: "Password is required" })}
               />
               <span className="absolute right-2 top-2">
                 {eyeOpen ? (
@@ -90,6 +96,9 @@ const Login = () => {
                 )}
               </span>
             </div>
+            {errors.password && (
+              <p className="text-red-600">{errors.password.message}</p>
+            )}
             <div className="text-center">
               <button type="submit" className="border p-2 cursor-pointer">
                 {loading ? <ActionLoader /> : "Sign In"}

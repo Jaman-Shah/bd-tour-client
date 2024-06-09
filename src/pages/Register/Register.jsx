@@ -11,12 +11,15 @@ import useSaveUser from "../../hooks/useSaveUser";
 import ActionLoader from "../../components/shared/ActionLoader";
 
 const Register = () => {
-  const { user, createUser, signInWithGithub, loading, setLoading } = useAuth();
+  const { createUser, signInWithGithub, loading, setLoading } = useAuth();
   const saveUser = useSaveUser();
 
   const [eyeOpen, setEyeOpen] = useState(false);
-  console.log(user);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   // importing navigate function
   const navigate = useNavigate();
@@ -28,29 +31,28 @@ const Register = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     const { name, email, photo, password } = data;
-    // console.log(name, email, photo[0], password);
     try {
       const uploadedPhotoUrl = await photoUpload(photo[0]);
       console.log(uploadedPhotoUrl, name, email, password);
 
-      try {
-        createUser(email, password).then((result) => {
-          // Adding user profile update
-          updateProfile(auth.currentUser, {
-            displayName: name,
-            photoURL: uploadedPhotoUrl,
-          }).then(() => {
-            saveUser(name, email, uploadedPhotoUrl);
-            setLoading(false);
-            toast.success("Account Created Successfully");
-            navigate("/");
-          });
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
+      const result = await createUser(email, password);
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: uploadedPhotoUrl,
+      });
+
+      saveUser(name, email, uploadedPhotoUrl);
+      setLoading(false);
+      toast.success("Account Created Successfully");
+      navigate("/");
     } catch (error) {
-      console.log(error.message, "photo UploadError");
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email is already in use");
+      } else {
+        toast.error(error.message);
+      }
+      console.log(error.message);
+      setLoading(false);
     }
   };
 
@@ -86,11 +88,13 @@ const Register = () => {
               className="w-full h-10 border border-black p-2 mb-4"
               {...register("name", { required: true })}
             />
+            {errors.name && <p className="text-red-600">Name is required</p>}
             <p className="mb-2 font-bold">Email:</p>
             <input
               className="w-full h-10 border border-black p-2 mb-4"
               {...register("email", { required: true })}
             />
+            {errors.email && <p className="text-red-600">Email is required</p>}
             <p className="mb-2 font-bold">Photo URL:</p>
             <input
               type="file"
@@ -98,6 +102,7 @@ const Register = () => {
               className="w-full h-10 border border-black p-2 mb-4"
               {...register("photo", { required: true })}
             />
+            {errors.photo && <p className="text-red-600">Photo is required</p>}
             <p className="mb-2 font-bold">Password:</p>
             <div className="relative">
               <input
@@ -119,6 +124,9 @@ const Register = () => {
                 )}
               </span>
             </div>
+            {errors.password && (
+              <p className="text-red-600">Password is required</p>
+            )}
             <div className="text-center">
               <button type="submit" className="border p-2 cursor-pointer">
                 {loading ? <ActionLoader /> : "Register"}
