@@ -8,12 +8,15 @@ const DashBoardItem = ({ link, label, icon: Icon, sideBarOpen }) => {
       to={link}
       className={({ isActive }) => {
         return `${isActive ? "bg-red-300" : ""} ${
-          !sideBarOpen ? "pl-6 rounded-full" : "rounded-2xl"
+          !sideBarOpen ? "pl-2 md:pl-6 rounded-full" : "rounded-2xl"
         } flex items-center gap-4 p-2`;
       }}
     >
       {Icon && <Icon className="text-3xl" />}
-      <p className="text-xl font-thin"> {sideBarOpen && label}</p>
+      <p className="text-xl hidden md:flex font-thin">
+        {" "}
+        {sideBarOpen && label}
+      </p>
     </NavLink>
   );
 };
