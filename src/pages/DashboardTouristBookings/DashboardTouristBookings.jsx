@@ -37,7 +37,9 @@ const DashboardTouristBookings = () => {
                     >
                       <td class="py-3 px-4">{package_title}</td>
                       <td class="py-3 px-4">{guide_name}</td>
-                      <td class="py-3 px-4">{order_date}</td>
+                      <td class="py-3 px-4">
+                        {new Date(order_date).toLocaleDateString()}
+                      </td>
                       <td class="py-3 px-4">{package_price}</td>
                       <td class="py-3 px-4">{status}</td>
                       <td class="flex justify-center px-3 gap-8">
