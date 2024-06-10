@@ -2,11 +2,11 @@ import React from "react";
 import SectionHeader from "../../components/shared/SectionHeader";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import ReviewsSection from "./ReviewsSection/ReviewsSection";
-import useAxiosCommon from "../../hooks/useAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const GuideReview = ({ guideEmail }) => {
-  const axiosCommon = useAxiosCommon();
+  const axiosSecure = useAxiosSecure();
   const {
     data: guidesReviews = [],
     isLoading,
@@ -14,7 +14,7 @@ const GuideReview = ({ guideEmail }) => {
   } = useQuery({
     queryKey: ["guideReviews", guideEmail],
     queryFn: async () => {
-      const response = await axiosCommon(`/reviews/guides/${guideEmail}`);
+      const response = await axiosSecure(`/reviews/guides/${guideEmail}`);
       return response.data;
     },
     enabled: !!guideEmail,

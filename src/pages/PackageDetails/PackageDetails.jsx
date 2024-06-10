@@ -9,6 +9,7 @@ import SectionHeader from "../../components/shared/SectionHeader";
 import AboutTheTour from "./AboutTheTour";
 import TourPlanSection from "./TourPlanSection";
 import BookingCreate from "./BookingCreate";
+import TourGuideSection from "./TourGuideSection";
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -41,6 +42,7 @@ const PackageDetails = () => {
       <ImagesSection photos={photos} />
       <AboutTheTour description={description} />
       <TourPlanSection tour_plans={tour_plans} />
+      <TourGuideSection />
       <BookingCreate id={_id} title={title} price={price} />
     </>
   );

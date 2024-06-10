@@ -19,6 +19,7 @@ import GuidePage from "../pages/GuidePage/GuidePage";
 import StoryDetails from "../pages/StoryDetails/StoryDetails";
 import AllStories from "../pages/AllStories/AllStories";
 import PackagesByTypePage from "../pages/PackagesByTypePage/PackagesByTypePage";
+import AllPackages from "../pages/AllPackages/AllPackages";
 
 export const routers = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const routers = createBrowserRouter([
       {
         path: "/package/:id",
         element: <PackageDetails />,
+      },
+      {
+        path: "/all-packages",
+        element: <AllPackages />,
       },
       {
         path: "/login",

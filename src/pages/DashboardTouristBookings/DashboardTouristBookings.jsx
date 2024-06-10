@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import useGetMyBookings from "../../hooks/useGetMyBookings";
 import PaymentModal from "../../components/PaymentModal";
 import ActionLoader from "./../../components/shared/ActionLoader";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const DashboardTouristBookings = () => {
   const { my_bookings, isLoading, refetch } = useGetMyBookings();
+  const axiosSecure = useAxiosSecure();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [booking, setBooking] = useState({});
@@ -12,6 +16,31 @@ const DashboardTouristBookings = () => {
   const handleModalOpen = (booking) => {
     setIsModalOpen(true);
     setBooking(booking);
+  };
+
+  const handleCancel = async (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you Want to Cancel Booking?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirm ",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/booking/${id}`).then((data) => {
+            if (data.data.acknowledged && data.data.deletedCount) {
+            }
+            toast.success("Delete Success");
+            refetch();
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   if (isLoading) return <ActionLoader />;
@@ -56,7 +85,10 @@ const DashboardTouristBookings = () => {
                       <td class="py-3 px-4">{status}</td>
                       <td class="flex justify-center px-3 gap-8">
                         {status === "In Review" ? (
-                          <button className="p-2 border-none rounded-lg bg-yellow-400">
+                          <button
+                            onClick={() => handleCancel(booking._id)}
+                            className="p-2 border-none rounded-lg bg-yellow-400"
+                          >
                             Cancel
                           </button>
                         ) : status === "Accepted" ? (

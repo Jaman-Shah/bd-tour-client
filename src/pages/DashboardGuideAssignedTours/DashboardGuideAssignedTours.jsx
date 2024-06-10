@@ -85,18 +85,33 @@ const DashboardGuideAssignedTours = () => {
                       <td class="py-3 px-4">{booking.order_date}</td>
                       <td class="py-3 px-4">{booking.package_price}</td>
                       <td class="flex justify-center items-center px-3 gap-8">
-                        <button
-                          onClick={() => handleAccept(booking._id, "Accepted")}
-                          className="p-2 border-none rounded-lg bg-green-400"
-                        >
-                          Accept
-                        </button>
-                        <button
-                          onClick={() => handleReject(booking._id, "Rejected")}
-                          className="p-2 border-none rounded-lg bg-red-400"
-                        >
-                          Reject
-                        </button>
+                        {!booking.status === "Paid" ? (
+                          <div>
+                            <button
+                              onClick={() =>
+                                handleAccept(booking._id, "Accepted")
+                              }
+                              className="p-2 border-none rounded-lg bg-green-400"
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleReject(booking._id, "Rejected")
+                              }
+                              className="p-2 border-none rounded-lg bg-red-400"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            className="p-2 border-none rounded-lg bg-blue-400"
+                            disabled
+                          >
+                            Paid
+                          </button>
+                        )}
                       </td>
                     </tr>
                   );

@@ -42,7 +42,7 @@ const PackagesCard = ({ item }) => {
         <div className="absolute h-1/6 w-1/2 left-0 top-2/3 transform translate-y-1/2 bg-pink-500 rounded-r-full">
           <p className="font-bold text-2xl">{price}$ </p>
         </div>
-        <div className="bg-[#575FCF] text-white text-center pt-24 pb-8 px-8 rounded-b-2xl">
+        <div className="bg-[#34495e] text-white text-center pt-24 pb-8 px-8 rounded-b-2xl">
           <h1>Type: {type}</h1>
           <h1 className="text-2xl font-bold text-black"> {title}</h1>
           <p className="mb-6">{description.slice(0, 100) + ".............."}</p>

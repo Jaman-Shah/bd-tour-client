@@ -78,75 +78,90 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-yellow-100 h-screen w-full py-4 flex justify-center items-center">
-      <div className="h-full md:h-3/3 w-full md:w-2/3 flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2 h-2/3 md:h-full rounded-l-3xl bg-white">
+    <div className="bg-yellow-100 min-h-screen py-4 flex justify-center items-center">
+      <div className="w-full max-w-4xl flex flex-col md:flex-row bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="w-full md:w-1/2 p-4 md:p-8">
           <h1 className="text-center my-4 font-bold text-3xl">Sign In</h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="p-4">
-            <p className="mb-2 font-bold">Name:</p>
-            <input
-              className="w-full h-10 border border-black p-2 mb-4"
-              {...register("name", { required: true })}
-            />
-            {errors.name && <p className="text-red-600">Name is required</p>}
-            <p className="mb-2 font-bold">Email:</p>
-            <input
-              className="w-full h-10 border border-black p-2 mb-4"
-              {...register("email", { required: true })}
-            />
-            {errors.email && <p className="text-red-600">Email is required</p>}
-            <p className="mb-2 font-bold">Photo URL:</p>
-            <input
-              type="file"
-              accept="image/*"
-              className="w-full h-10 border border-black p-2 mb-4"
-              {...register("photo", { required: true })}
-            />
-            {errors.photo && <p className="text-red-600">Photo is required</p>}
-            <p className="mb-2 font-bold">Password:</p>
-            <div className="relative">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label className="block mb-1 font-bold">Name:</label>
               <input
-                type={eyeOpen ? "text" : "password"}
-                className="w-full h-10 border border-black p-2 mb-4"
-                {...register("password", { required: true })}
+                className="w-full h-10 border border-black p-2"
+                {...register("name", { required: true })}
               />
-              <span className="absolute right-2 top-2">
-                {eyeOpen ? (
-                  <BsFillEyeFill
-                    className="text-2xl"
-                    onClick={() => setEyeOpen(false)}
-                  />
-                ) : (
-                  <BsFillEyeSlashFill
-                    className="text-2xl"
-                    onClick={() => setEyeOpen(true)}
-                  />
-                )}
-              </span>
+              {errors.name && <p className="text-red-600">Name is required</p>}
             </div>
-            {errors.password && (
-              <p className="text-red-600">Password is required</p>
-            )}
+            <div>
+              <label className="block mb-1 font-bold">Email:</label>
+              <input
+                className="w-full h-10 border border-black p-2"
+                {...register("email", { required: true })}
+              />
+              {errors.email && (
+                <p className="text-red-600">Email is required</p>
+              )}
+            </div>
+            <div>
+              <label className="block mb-1 font-bold">Photo URL:</label>
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full h-10 border border-black p-2"
+                {...register("photo", { required: true })}
+              />
+              {errors.photo && (
+                <p className="text-red-600">Photo is required</p>
+              )}
+            </div>
+            <div>
+              <label className="block mb-1 font-bold">Password:</label>
+              <div className="relative">
+                <input
+                  type={eyeOpen ? "text" : "password"}
+                  className="w-full h-10 border border-black p-2"
+                  {...register("password", { required: true })}
+                />
+                <span className="absolute right-2 top-2 cursor-pointer">
+                  {eyeOpen ? (
+                    <BsFillEyeFill
+                      className="text-2xl"
+                      onClick={() => setEyeOpen(false)}
+                    />
+                  ) : (
+                    <BsFillEyeSlashFill
+                      className="text-2xl"
+                      onClick={() => setEyeOpen(true)}
+                    />
+                  )}
+                </span>
+              </div>
+              {errors.password && (
+                <p className="text-red-600">Password is required</p>
+              )}
+            </div>
             <div className="text-center">
-              <button type="submit" className="border p-2 cursor-pointer">
+              <button
+                type="submit"
+                className="w-full md:w-auto bg-blue-500 text-white py-2 px-4 rounded"
+              >
                 {loading ? <ActionLoader /> : "Register"}
               </button>
             </div>
           </form>
-          <div className="flex justify-center gap-2">
+          <div className="flex justify-center gap-2 mt-4">
             <button
               onClick={handleGithubLogin}
-              className="border p-2 border-black"
+              className="w-full md:w-auto bg-black text-white py-2 px-4 rounded"
             >
               GitHub
             </button>
           </div>
         </div>
-        <div className="w-full md:w-1/2 h-1/3 md:h-full flex justify-center items-center rounded-r-3xl bg-blue-300">
+        <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-blue-300 p-4 md:p-8">
           <div className="text-center">
             <h1 className="font-bold text-3xl">Welcome To Register</h1>
-            <h1 className="font-thin text-xl mb-3">Don't Have an account?</h1>
-            <Link to="/login" className="border rounded-full p-2">
+            <h1 className="font-thin text-xl mb-3">Already Have an account?</h1>
+            <Link to="/login" className="border rounded-full py-2 px-4">
               Sign In
             </Link>
           </div>
