@@ -6,7 +6,7 @@ import Logo from "./Logo";
 const Footer = () => {
   return (
     <footer className="p-10 bg-[#192a56] text-white mt-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div className="border-x rounded-3xl p-4">
           <h1 className="text-3xl font-bold mb-4">
             <Logo />
@@ -42,6 +42,14 @@ const Footer = () => {
         </div>
         <div className="border-x rounded-3xl p-4">
           <h1 className="font-bold text-3xl">Payment system</h1>
+          <div className="flex justify-center items-center mt-4">
+            <div
+              className="h-32 w-32 bg-cover bg-center rounded-full "
+              style={{
+                backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGluJhW7I1NYU7jF77E-9K9I46_ib_DUNHw&s)`,
+              }}
+            ></div>
+          </div>
         </div>
       </div>
     </footer>

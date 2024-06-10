@@ -208,7 +208,7 @@ const Navbar = () => {
                 <Link
                   onClick={toggleProfile}
                   to="/dashboard"
-                  className="p-2 font-bold rounded-2xl bg-gray-500 text-white"
+                  className="p-2 font-bold rounded-2xl bg-black text-white"
                 >
                   Dashboard
                 </Link>

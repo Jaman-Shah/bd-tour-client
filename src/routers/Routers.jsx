@@ -20,11 +20,13 @@ import StoryDetails from "../pages/StoryDetails/StoryDetails";
 import AllStories from "../pages/AllStories/AllStories";
 import PackagesByTypePage from "../pages/PackagesByTypePage/PackagesByTypePage";
 import AllPackages from "../pages/AllPackages/AllPackages";
+import ErrorPage from "./../components/ErrorPage";
 
 export const routers = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
