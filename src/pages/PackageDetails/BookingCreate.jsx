@@ -234,7 +234,10 @@ const BookingCreate = ({ id, title, price }) => {
                 Congratulations
                 <p className="text-2xl"> You have booked 3 packages</p>
               </p>
-              <button className="border p-2 font-bold border-black  rounded-full">
+              <button
+                onClick={() => setShowConfetti(false)}
+                className="border p-2 font-bold border-black  rounded-full"
+              >
                 Apply
               </button>
             </div>

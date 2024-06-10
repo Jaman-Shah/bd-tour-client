@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import SectionHeader from "../../../components/shared/SectionHeader";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -8,7 +9,11 @@ import OurGuide from "./OurGuide";
 
 const TourismAndTravelGuide = () => {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <SectionHeader title="Tourism and Travel Guide" />
       <div className="text-center">
         <Tabs>
@@ -30,7 +35,7 @@ const TourismAndTravelGuide = () => {
           </TabPanel>
         </Tabs>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

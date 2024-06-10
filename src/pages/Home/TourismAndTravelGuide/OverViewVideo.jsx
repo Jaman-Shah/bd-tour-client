@@ -1,12 +1,20 @@
 import React from "react";
+import { motion } from "framer-motion";
 import ReactPlayer from "react-player";
 import usePackages from "../../../hooks/usePackages";
+
 const OverViewVideo = () => {
   const { packages } = usePackages();
   console.log(packages);
+
   return (
-    <div className="flex gap-3 h-full md:h-[320px] flex-col md:flex-row overflow-hidden">
-      <div className="w-full md:w-1/2 bg-black ">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      className="flex gap-3 h-full md:h-[320px] flex-col md:flex-row overflow-hidden"
+    >
+      <div className="w-full md:w-1/2 bg-black">
         <ReactPlayer
           url="https://www.youtube.com/watch?v=Z44fFqBQQtg"
           width="100%"
@@ -28,7 +36,8 @@ const OverViewVideo = () => {
             })}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 };
+
 export default OverViewVideo;

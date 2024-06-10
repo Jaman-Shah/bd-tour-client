@@ -1,13 +1,16 @@
 import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoCall, IoMail } from "react-icons/io5";
+import Logo from "./Logo";
 
 const Footer = () => {
   return (
     <footer className="p-10 bg-[#192a56] text-white mt-10">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <div className="border-x rounded-3xl p-4">
-          <h1 className="text-3xl font-bold mb-4">Logo</h1>
+          <h1 className="text-3xl font-bold mb-4">
+            <Logo />
+          </h1>
           <h1 className="font-bold text-4xl mb-4">Want to book a tour ? </h1>
           <button className="font-thin p-2 border rounded-full">
             Book Now

@@ -7,6 +7,8 @@ import { BsFillQuestionSquareFill } from "react-icons/bs";
 import { RiContactsLine } from "react-icons/ri";
 import useAuth from "./../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,29 +51,30 @@ const Navbar = () => {
 
   const activeClass = ({ isActive }) =>
     `hover:text-black hover:rounded-xl ${
-      isActive ? "text-white font-bold" : "text-orange-500 text-[#ffa801]"
+      isActive ? "text-red-500 font-bold" : "text-blue-500 text-[#007BFF]"
     }`;
 
   return (
-    <nav
+    <motion.nav
+      initial={{ y: -250 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 120 }}
       x-data="{ isOpen: false }"
-      className={`fixed w-full transform top-0 z-10 ${
-        navbarBg ? "bg-[#34495e]" : "bg-[#34495e]"
+      className={`fixed w-full  transform top-0 z-50 ${
+        navbarBg ? "bg-[#2c3e50]" : "bg-[#f8f9fa]"
       } shadow`}
     >
       <div className="px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-3xl font-bold text-orange-500">
-              Tourist Guide
-            </h1>
+            <Logo />
           </Link>
 
           <div className="flex md:hidden">
             <button
               onClick={toggleMenu}
               type="button"
-              className="text-black-500 hover:text-black dark:hover:text-black focus:outline-none focus:text-gray-600"
+              className="text-blue-500 hover:text-red-500 dark:hover:text-black focus:outline-none focus:text-gray-600"
               aria-label="toggle menu"
             >
               {!isOpen ? (
@@ -110,49 +113,61 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-green-500 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${
+          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-blue-500 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${
             isOpen ? "translate-x-0 opacity-100" : "opacity-0 -translate-x-full"
           }`}
         >
           <div className="flex relative items-center gap-10 flex-col md:flex-row md:mx-6">
-            <NavLink to="/" className={activeClass}>
-              <div className="flex flex-col items-center">
-                <IoHomeOutline
-                  className={`${activeClass} text-xl rounded-full`}
-                />
-                <h3 className="text-sm">Home</h3>
-              </div>
-            </NavLink>
-            <NavLink to="/community" className={activeClass}>
-              <div className="flex flex-col items-center">
-                <FaPeopleRoof
-                  className={`${activeClass} text-xl rounded-full`}
-                />
-                <h3 className="text-sm">Community</h3>
-              </div>
-            </NavLink>
-            <NavLink to="/blogs" className={activeClass}>
-              <div className="flex flex-col items-center">
-                <FaBloggerB className={`${activeClass} text-xl rounded-full`} />
-                <h3 className="text-sm">Blogs</h3>
-              </div>
-            </NavLink>
-            <NavLink to="/about-us" className={activeClass}>
-              <div className="flex flex-col items-center">
-                <BsFillQuestionSquareFill
-                  className={`${activeClass} text-xl rounded-full`}
-                />
-                <h3 className="text-sm">About Us</h3>
-              </div>
-            </NavLink>
-            <NavLink to="/contact-us" className={activeClass}>
-              <div className="flex flex-col items-center">
-                <RiContactsLine
-                  className={`${activeClass} text-xl rounded-full`}
-                />
-                <h3 className="text-sm">Contact Us</h3>
-              </div>
-            </NavLink>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavLink to="/" className={activeClass}>
+                <div className="flex flex-col items-center">
+                  <IoHomeOutline
+                    className={`${activeClass} text-xl rounded-full`}
+                  />
+                  <h3 className="text-sm">Home</h3>
+                </div>
+              </NavLink>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavLink to="/community" className={activeClass}>
+                <div className="flex flex-col items-center">
+                  <FaPeopleRoof
+                    className={`${activeClass} text-xl rounded-full`}
+                  />
+                  <h3 className="text-sm">Community</h3>
+                </div>
+              </NavLink>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavLink to="/blogs" className={activeClass}>
+                <div className="flex flex-col items-center">
+                  <FaBloggerB
+                    className={`${activeClass} text-xl rounded-full`}
+                  />
+                  <h3 className="text-sm">Blogs</h3>
+                </div>
+              </NavLink>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavLink to="/about-us" className={activeClass}>
+                <div className="flex flex-col items-center">
+                  <BsFillQuestionSquareFill
+                    className={`${activeClass} text-xl rounded-full`}
+                  />
+                  <h3 className="text-sm">About Us</h3>
+                </div>
+              </NavLink>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavLink to="/contact-us" className={activeClass}>
+                <div className="flex flex-col items-center">
+                  <RiContactsLine
+                    className={`${activeClass} text-xl rounded-full`}
+                  />
+                  <h3 className="text-sm">Contact Us</h3>
+                </div>
+              </NavLink>
+            </motion.div>
             <div className="flex gap-4 items-center flex-col md:flex-row">
               {user ? (
                 <div className="flex gap-4">
@@ -187,7 +202,7 @@ const Navbar = () => {
             <div
               className={`${
                 showProfileMenu ? "absolute" : "hidden"
-              } md:-bottom-[200px] right-0 top-10 bg-green-300 border-2 shadow-2xl border-black p-4  rounded-2xl`}
+              } md:-bottom-[200px] right-0 top-10 bg-blue-300 border-2 shadow-2xl border-black p-4  rounded-2xl`}
             >
               <div className="flex flex-col gap-1">
                 <Link
@@ -216,7 +231,7 @@ const Navbar = () => {
           <div className="flex justify-center md:block"></div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
