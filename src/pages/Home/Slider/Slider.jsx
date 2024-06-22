@@ -11,7 +11,7 @@ import usePackages from "../../../hooks/usePackages";
 export default function Slider() {
   const { packages } = usePackages();
 
-  console.log("packages", packages);
+  
 
   return (
     <div className="relative h-[400px] flex items-center">
@@ -36,7 +36,7 @@ export default function Slider() {
         {packages &&
           packages.map((singlePackage) => {
             const imageUrl = singlePackage?.photos?.[0];
-            console.log(imageUrl);
+           
             return (
               <SwiperSlide>
                 <HomeBannerItem

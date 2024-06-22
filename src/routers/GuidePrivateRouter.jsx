@@ -5,7 +5,7 @@ import useUser from "../hooks/useUser";
 const GuidePrivateRouter = ({ children }) => {
   const { currentUser, isLoading } = useUser();
   const location = useLocation();
-
+  console.log("current user is", currentUser);
   if (isLoading) {
     return <PageLoader />;
   }

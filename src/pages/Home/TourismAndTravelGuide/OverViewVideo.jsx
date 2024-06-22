@@ -5,7 +5,6 @@ import usePackages from "../../../hooks/usePackages";
 
 const OverViewVideo = () => {
   const { packages } = usePackages();
-  console.log(packages);
 
   return (
     <motion.div

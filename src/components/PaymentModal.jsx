@@ -14,8 +14,7 @@ import CheckOutForm from "../stripe/CheckOutForm";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const PaymentModal = ({ isModalOpen, setIsModalOpen, booking, refetch }) => {
-  console.log("booking is ", booking);
-  console.log("bookingprice", booking.package_price);
+ 
   return (
     <Transition appear show={isModalOpen}>
       <Dialog

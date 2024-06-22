@@ -13,9 +13,9 @@ const saveUser = async (name, email, photo_url) => {
   };
   try {
     const response = await axiosCommon.post("/users", user);
-    console.log(response.data);
+  
   } catch (error) {
-    console.log("error form creating user", error.message);
+    console.log( error.message);
   }
 };
 

@@ -27,7 +27,7 @@ const AddGuideProfileModal = ({
   };
 
   const handleSingleDataDelete = (title) => {
-    console.log(title);
+ 
     const remainingData = data.filter(
       (singleData) => singleData.title !== title
     );

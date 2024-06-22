@@ -3,38 +3,35 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
-  baseURL: `${import.meta.env.VITE_BASE_URL}`,
+  baseURL: import.meta.env.VITE_BASE_URL, // Ensure the base URL is correctly set
 });
 
 const useAxiosSecure = () => {
   const { signOutUser, setLoading } = useAuth();
   const navigate = useNavigate();
 
-  // requesting interceptor to add authorization header for every call to the api
+  // Request interceptor to add authorization header for every API call
   axiosSecure.interceptors.request.use(
-    function (config) {
-      const token = localStorage.getItem("access-token");
-      config.headers.authorization = `Bearer ${token}`;
+    (config) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers.authorization = `Bearer ${token}`;
+      }
       return config;
     },
-    function (error) {
-      return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
   );
 
-  // intercept 401 status
+  // Response interceptor to handle 401 and 403 status errors
   axiosSecure.interceptors.response.use(
-    function (response) {
-      return response;
-    },
-    async function (error) {
+    (response) => response,
+    async (error) => {
       const status = error.response ? error.response.status : null;
       if (status === 401 || status === 403) {
-        await signOutUser();
+        signOutUser();
         navigate("/login");
-        setLoading(false);
       }
-      console.log("status error", status);
+      console.log("Status error:", status);
       return Promise.reject(error);
     }
   );

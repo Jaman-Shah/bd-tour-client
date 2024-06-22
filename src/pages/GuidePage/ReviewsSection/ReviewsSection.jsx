@@ -2,7 +2,7 @@ import React from "react";
 import ReviewCard from "../GuideReview/ReviewCard/ReviewCard";
 
 const ReviewsSection = ({ guidesReviews, isLoading }) => {
-  console.log("guideReviews", guidesReviews);
+  
   if (isLoading) {
     return "Loading.....";
   }

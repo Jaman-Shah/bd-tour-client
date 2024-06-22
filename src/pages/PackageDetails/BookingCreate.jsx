@@ -4,22 +4,20 @@ import useGetGuides from "../../hooks/useGetGuides";
 import useUser from "../../hooks/useUser";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import useAxiosSecure from "./../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
-import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import useGetBookingCount from "../../hooks/useGetBookingCount";
 import Confetti from "react-confetti";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
 
 const BookingCreate = ({ id, title, price }) => {
-  const { user } = useAuth();
+  const { currentUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const [startDate, setStartDate] = useState(new Date());
   const [currentGuideEmail, setCurrentGuideEmail] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
-  const { currentUser } = useUser();
   const { guides } = useGetGuides();
   const {
     bookingCount,
@@ -32,7 +30,7 @@ const BookingCreate = ({ id, title, price }) => {
     setNewBookingCount(bookingCount);
   }, [bookingCount]);
 
-  const axiosSecure = useAxiosSecure();
+  const axiosCommon = useAxiosCommon();
 
   const handleCurrentGuideEmail = (e) => {
     const currentGuide = guides.find((guide) => guide.name === e.target.value);
@@ -41,9 +39,8 @@ const BookingCreate = ({ id, title, price }) => {
 
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
-    if (!user) {
-      navigate("/login", { state: { from: location } });
-      return null;
+    if (!currentUser) {
+      return navigate("/login", { state: { from: location } });
     }
     const form = e.target;
     const package_id = id;
@@ -81,7 +78,7 @@ const BookingCreate = ({ id, title, price }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await axiosSecure.post(`/bookings`, booking);
+          const { data } = await axiosCommon.post(`/bookings`, booking);
           if (data.message) {
             return toast.error(data.message);
           }

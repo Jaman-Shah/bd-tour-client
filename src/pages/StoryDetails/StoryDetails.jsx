@@ -15,7 +15,6 @@ const StoryDetails = () => {
   const axiosCommon = useAxiosCommon();
 
   const currentPageUrl = `${window.location.href}`;
-  console.log(currentPageUrl);
 
   // loading single story details
   const {

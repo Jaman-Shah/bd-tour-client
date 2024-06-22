@@ -5,7 +5,7 @@ import StoryCard from "./StoryCard/StoryCard";
 
 const Stories = () => {
   const { stories } = useGetStories();
-  console.log("stories", stories);
+
   return (
     <div>
       <SectionHeader title="Lets See Tourists Stories " />

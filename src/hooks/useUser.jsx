@@ -5,6 +5,8 @@ import useAxiosSecure from "./useAxiosSecure";
 const useUser = () => {
   const { user } = useAuth();
 
+  console.log("Authenticated user:", user);
+
   const isEnabled = !!user;
   const initialData = user || "";
   const axiosSecure = useAxiosSecure();
@@ -20,6 +22,7 @@ const useUser = () => {
         return;
       }
       const response = await axiosSecure(`/user/${user.email}`);
+      console.log("API response:", response.data);
       return response.data;
     },
     enabled: isEnabled,

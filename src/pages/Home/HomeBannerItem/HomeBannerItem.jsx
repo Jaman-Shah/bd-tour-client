@@ -1,7 +1,7 @@
 import React from "react";
 
 const HomeBannerItem = ({ image, heading, details }) => {
-  console.log("heading-detail", heading, details);
+
   return (
     <div className="h-full relative flex rounded-2xl  items-center justify-center ">
       <div

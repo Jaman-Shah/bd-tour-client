@@ -21,6 +21,9 @@ import AllStories from "../pages/AllStories/AllStories";
 import PackagesByTypePage from "../pages/PackagesByTypePage/PackagesByTypePage";
 import AllPackages from "../pages/AllPackages/AllPackages";
 import ErrorPage from "./../components/ErrorPage";
+import PrivateRouter from "./PrivateRouter";
+import GuidePrivateRouter from "./GuidePrivateRouter";
+import AdminPrivateRouter from "./AdminPrivateRouter";
 
 export const routers = createBrowserRouter([
   {
@@ -82,7 +85,11 @@ export const routers = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRouter>
+            <Dashboard />
+          </PrivateRouter>
+        ),
         children: [
           {
             path: "",
@@ -102,11 +109,19 @@ export const routers = createBrowserRouter([
           },
           {
             path: "admin-add-packages",
-            element: <DashboardAdminAddPackage />,
+            element: (
+              <AdminPrivateRouter>
+                <DashboardAdminAddPackage />
+              </AdminPrivateRouter>
+            ),
           },
           {
             path: "admin-manage-users",
-            element: <DashboardAdminManageUser />,
+            element: (
+              <AdminPrivateRouter>
+                <DashboardAdminManageUser />
+              </AdminPrivateRouter>
+            ),
           },
         ],
       },

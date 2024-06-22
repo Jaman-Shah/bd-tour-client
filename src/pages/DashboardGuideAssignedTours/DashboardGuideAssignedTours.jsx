@@ -7,8 +7,6 @@ import { toast } from "react-hot-toast";
 const DashboardGuideAssignedTours = () => {
   const { user } = useAuth();
 
-  console.log("user is ", user);
-
   const isEnabled = !!user?.email;
   const initialData = [];
   const axiosSecure = useAxiosSecure();
@@ -82,10 +80,13 @@ const DashboardGuideAssignedTours = () => {
                       <td class="py-3 px-4">{booking.package_title}</td>
                       <td class="py-3 px-4">{booking.tourist_name}</td>
                       <td class="py-3 px-4 text-sm">{booking.status}</td>
-                      <td class="py-3 px-4">{booking.order_date}</td>
+                      <td class="py-3 px-4">
+                        {new Date(booking.order_date).toLocaleDateString()}
+                      </td>
                       <td class="py-3 px-4">{booking.package_price}</td>
                       <td class="flex justify-center items-center px-3 gap-8">
-                        {!booking.status === "Paid" ? (
+                        {booking.status === "In Review" ||
+                        booking.status === "Accepted" ? (
                           <div>
                             <button
                               onClick={() =>

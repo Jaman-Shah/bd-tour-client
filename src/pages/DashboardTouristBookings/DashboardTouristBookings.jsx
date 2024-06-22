@@ -27,7 +27,7 @@ const DashboardTouristBookings = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Confirm ",
+        confirmButtonText: "No ",
       }).then((result) => {
         if (result.isConfirmed) {
           axiosSecure.delete(`/booking/${id}`).then((data) => {

@@ -1,21 +1,19 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
-  GithubAuthProvider,
   GoogleAuthProvider,
+  GithubAuthProvider,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import useAxiosCommon from "./../hooks/useAxiosCommon";
+
 export const AuthContext = createContext(null);
 
-// google auth provider
 const googleProvider = new GoogleAuthProvider();
-
-// github auth provider
 const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
@@ -23,76 +21,121 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const axiosCommon = useAxiosCommon();
 
-  // creating user with email and password
-
-  const createUser = (email, password) => {
-    setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+  const handleUserAuthentication = async (userCredential) => {
+    const user = userCredential.user;
+    setUser(user);
+    const token = await saveUserInfoToApi(user);
+    localStorage.setItem("token", token);
+    return user;
   };
 
-  // login user with email and password form firebase
-
-  const loginUser = (email, password) => {
+  const createUser = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return await handleUserAuthentication(userCredential);
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // sing in with google popup
-
-  const signInWithGoogle = () => {
+  const loginUser = async (email, password) => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return await handleUserAuthentication(userCredential);
+    } catch (error) {
+      console.error("Error logging in:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // sign in with github popup
-  const signInWithGithub = () => {
+  const signInWithGoogle = async () => {
     setLoading(true);
-    return signInWithPopup(auth, githubProvider);
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      return await handleUserAuthentication(userCredential);
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // sign out the user
-
-  const signOutUser = () => {
+  const signInWithGithub = async () => {
     setLoading(true);
-    return signOut(auth);
+    try {
+      const userCredential = await signInWithPopup(auth, githubProvider);
+      return await handleUserAuthentication(userCredential);
+    } catch (error) {
+      console.error("Error signing in with GitHub:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // saving the user to mongodb
+  const signOutUser = async () => {
+    setLoading(true);
+    try {
+      await signOut(auth);
+      setUser(null);
+      localStorage.removeItem("token");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // observe auth state change
+  const saveUserInfoToApi = async (user) => {
+    try {
+      const userInfo = { email: user.email };
+      const response = await axiosCommon.post("/jwt", userInfo.email);
+      return response.data.token;
+    } catch (error) {
+      console.error("Error saving user info to API:", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        const userInfo = { email: currentUser.email };
-        axiosCommon.post("/jwt", userInfo).then((res) => {
-          if (res.data.token) {
-            localStorage.setItem("access-token", res.data.token);
-          }
-        });
-      } else {
-        localStorage.removeItem("access-token");
-      }
       setLoading(false);
     });
-    return () => {
-      unSubscribe();
-      setLoading(false);
-    };
+
+    return () => unsubscribe();
   }, []);
-  const userInfo = {
+
+  const contextValue = {
     user,
     loading,
     setLoading,
-    setUser,
     createUser,
     loginUser,
     signInWithGoogle,
     signInWithGithub,
     signOutUser,
   };
+
   return (
-    <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 

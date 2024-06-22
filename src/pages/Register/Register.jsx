@@ -33,7 +33,7 @@ const Register = () => {
     const { name, email, photo, password } = data;
     try {
       const uploadedPhotoUrl = await photoUpload(photo[0]);
-      console.log(uploadedPhotoUrl, name, email, password);
+   
 
       const result = await createUser(email, password);
       await updateProfile(auth.currentUser, {

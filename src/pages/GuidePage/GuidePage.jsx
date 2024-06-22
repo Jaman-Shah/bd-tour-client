@@ -19,7 +19,7 @@ const GuidePage = () => {
       return response.data;
     },
   });
-  console.log(guide);
+
 
   const {
     _id,

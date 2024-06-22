@@ -5,7 +5,7 @@ import useGetGuides from "../../../hooks/useGetGuides";
 
 const OurGuide = () => {
   const { guides, isLoading } = useGetGuides();
-  console.log("guides are", guides);
+ 
 
   if (isLoading) return "Loading....";
 

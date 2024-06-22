@@ -25,7 +25,7 @@ const CheckoutForm = ({ booking, refetch }) => {
       const { data } = await axiosSecure.post("/create-payment-intent", {
         price: package_price,
       });
-      console.log("client secret from server", data);
+     
       setClientSecret(data.clientSecret);
     } catch (error) {
       console.error("Error fetching client secret:", error);
@@ -93,7 +93,7 @@ const CheckoutForm = ({ booking, refetch }) => {
         transactionId: paymentIntent.id,
         date: new Date(),
       };
-      console.log("payment obj", paymentInfo);
+      
 
       try {
         const response = await axiosSecure.put("/payment", paymentInfo);

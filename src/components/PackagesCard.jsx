@@ -1,19 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import useUser from "../hooks/useUser";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import useAxiosCommon from "../hooks/useAxiosCommon";
 
 const PackagesCard = ({ item }) => {
   const { currentUser } = useUser();
-  const axiosSecure = useAxiosSecure();
-  console.log("current user", currentUser);
+  const axiosCommon = useAxiosCommon();
+  const navigate = useNavigate();
+
   const { _id, title, type, price, description, photos } = item;
 
   const handleWishlist = async (id, email, title) => {
+    if (!currentUser) {
+      return navigate("/login");
+    }
     try {
-      const response = await axiosSecure.post(`/wishlists`, {
+      const response = await axiosCommon.post(`/wishlists`, {
         package_id: id,
         package_title: title,
         email,

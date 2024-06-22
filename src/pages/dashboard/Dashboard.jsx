@@ -19,6 +19,7 @@ const Dashboard = () => {
   // using tanstack query to update users
 
   // getting users  info with the help of useUser
+  console.log("roleof current user", currentUser.role);
 
   const handleSideBar = () => {
     setSideBarOpen(!sideBarOpen);
